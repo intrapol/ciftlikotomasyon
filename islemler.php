@@ -21,6 +21,7 @@ $('#yakala a').click(function() {
 </head>
 <body>
 <?php session_start();
+
 function benimsorum2($vt,$sorgu,$tercih) {
 	$a =$sorgu;
 	$b=$vt->prepare($a); 
