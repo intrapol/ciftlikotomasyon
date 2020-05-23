@@ -23,7 +23,7 @@ $("#btn").click(function()  {
 	 $("#cevap").html(donen_veri).slideUp(2000);
 	},
 })
-})
+})//
 $('#urunler a').click(function() {
 var sectionId=$(this).attr('sectionId');
 $("#sonuc").load("islemler.php?islem=urun&katid=" + sectionId).fadeIn();
