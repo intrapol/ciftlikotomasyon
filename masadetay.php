@@ -1,5 +1,6 @@
 <?php include("fonksiyon/fonksiyon.php"); $masam = new sistem; 
 @$masaid=$_GET["masaid"];
+// denme için pus yaılacak 
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html;" charset="utf-8" />

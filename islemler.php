@@ -113,36 +113,36 @@ $id=htmlspecialchars($_GET["id"]);
 break;
 case "ekle":
 if ($_POST) :
-@$masaid=htmlspecialchars($_POST["masaid"]);
-@$urunid=htmlspecialchars($_POST["urunid"]);
-@$adet=htmlspecialchars($_POST["adet"]);
-if ($masaid==""  || $urunid==""  || $adet=="" ) :
-echo '<div class="alert alert-danger mt-4 text-center">Boş alan bırakma</div>';
-else:
-$varmi="select * from anliksiparis where urunid=$urunid and masaid=$masaid";
-$var=benimsorum2($db,$varmi,1);
-if ($var->num_rows!=0) :
-$urundizi=$var->fetch_assoc();
-$sonadet= $adet + $urundizi["adet"];
-$islemid=$urundizi["id"];
-$guncel="UPDATE anliksiparis set adet=$sonadet where id=$islemid";
-$guncelson=$db->prepare($guncel);
-$guncelson->execute();
-echo '<div class="alert alert-success mt-4 text-align">Adet Güncellendi</div>';
-else:
- $a="select * from urunler where id=$urunid";
- $d=benimsorum2($db,$a,1); 
- $son=$d->fetch_assoc();
- $urunad=$son["ad"];
- $urunfiyat=$son["fiyat"];
-$ekle="insert into anliksiparis (masaid,urunid,urunad,urunfiyat,adet) VALUES ($masaid,$urunid,'$urunad','$urunfiyat',$adet)";
-$ekleson=$db->prepare($ekle);
-$ekleson->execute();
-echo '<div class="alert alert-success mt-4 text-align">Eklendi</div>';
-endif;
-endif;
-else:
-echo '<div class="alert alert-danger mt-4 text-align">HATA VAR</div>';
+		@$masaid=htmlspecialchars($_POST["masaid"]);
+		@$urunid=htmlspecialchars($_POST["urunid"]);
+		@$adet=htmlspecialchars($_POST["adet"]);
+	if ($masaid==""  || $urunid==""  || $adet=="" ) :
+			echo '<div class="alert alert-danger mt-4 text-center">Boş alan bırakma</div>';
+		else:
+			$varmi="select * from anliksiparis where urunid=$urunid and masaid=$masaid";
+			$var=benimsorum2($db,$varmi,1);
+		if ($var->num_rows!=0) :
+				$urundizi=$var->fetch_assoc();
+				$sonadet= $adet + $urundizi["adet"];
+				$islemid=$urundizi["id"];
+				$guncel="UPDATE anliksiparis set adet=$sonadet where id=$islemid";
+				$guncelson=$db->prepare($guncel);
+				$guncelson->execute();
+				echo '<div class="alert alert-success mt-4 text-align">Adet Güncellendi</div>';
+			else:
+				$a="select * from urunler where id=$urunid";
+				$d=benimsorum2($db,$a,1); 
+				$son=$d->fetch_assoc();
+				$urunad=$son["ad"];
+				$urunfiyat=$son["fiyat"];
+				$ekle="insert into anliksiparis (masaid,urunid,urunad,urunfiyat,adet) VALUES ($masaid,$urunid,'$urunad','$urunfiyat',$adet)";
+				$ekleson=$db->prepare($ekle);
+				$ekleson->execute();
+				echo '<div class="alert alert-success mt-4 text-align">Eklendi</div>';
+		endif;
+	endif;
+	else:
+	echo '<div class="alert alert-danger mt-4 text-align">HATA VAR</div>';
 endif;
 break;
 case "urun" :
