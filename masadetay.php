@@ -1,6 +1,5 @@
-<?php include("fonksiyon/fonksiyon.php"); $masam = new sistem; 
+<?php include("fonksiyon/fonksiyon.php"); $masam = new sistem;
 @$masaid=$_GET["masaid"];
-// denme için pus yaılacak 
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html;" charset="utf-8" />
@@ -9,11 +8,11 @@
 <link rel="stylesheet" href="dosya/stil.css">
 <title>TEST</title>
 <script>
-$(document).ready(function() { 
+$(document).ready(function() {
 var id="<?php echo $masaid; ?>";
 $("#veri").load("islemler.php?islem=goster&id="+id);
 $("#btn").click(function()  {
-	$.ajax({	
+	$.ajax({
 		type : "POST",
 		url :'islemler.php?islem=ekle',
 		data :$('#formum').serialize(),
@@ -24,7 +23,8 @@ $("#btn").click(function()  {
 	 $("#cevap").html(donen_veri).slideUp(2000);
 	},
 })
-})//
+})
+
 $('#urunler a').click(function() {
 var sectionId=$(this).attr('sectionId');
 $("#sonuc").load("islemler.php?islem=urun&katid=" + sectionId).fadeIn();
@@ -33,8 +33,8 @@ $("#sonuc").load("islemler.php?islem=urun&katid=" + sectionId).fadeIn();
 </script>
 </head>
 <body>
-<div class="container-fluid"> 
-<?php 
+<div class="container-fluid">
+<?php
 if ($masaid!="") :
 $son=$masam->masagetir($db,$masaid);
 $dizi=$son->fetch_assoc();
@@ -56,44 +56,167 @@ $dizi=$son->fetch_assoc();
 <form id="formum">
 <div class="col-md-12" id="sonuc"  style="min-height:600px;"></div>
 </div>
+
+
+
 <div class="row">
+
+
+
 <div class="col-md-12" class="div2">
+
+
+
 <div class="row" class="div2">
+
 <div class="col-md-6">
+
+
+
 <input type="hidden" name="masaid" value="<?php echo $dizi["id"]; ?>" />
+
 <input type="button" id="btn" value="EKLE" class="btn btn-success btn-block mt-4" />
+
+
+
 </div>
+
+
+
+
+
+
+
 <div class="col-md-6">
-<?php 
-for ($i=1; $i<=13; $i++) :
-echo '<label class="btn btn-success m-2"><input name="adet" type="radio" value="'.$i.'" />'.$i.'</label>';
-endfor;
-?>
-</form>
-</div>
-</div>
-</div>
-</div>
-<!--
-<form id="formum">
-<input type="text" name="urunid" />
-<input type="text" name="adet" />
-<input type="hidden" name="masaid" value="</?php echo $masaid; ?>" />
-<input type="button" id="btn" value="EKLE" />
-</form>
---->
-</div>
-<!-- kat en sağ -->
-<div class="col-md-2  border-left" id="urunler">
-<?php $masam->urungrup($db); ?>
-</div>
-</div>
-</div>
+
 <?php
-else:
-echo "hata var";
-endif;
+
+for ($i=1; $i<=13; $i++) :
+
+echo '<label class="btn btn-success m-2"><input name="adet" type="radio" value="'.$i.'" />'.$i.'</label>';
+
+endfor;
+
 ?>
+
+</form>
+
 </div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!--
+
+<form id="formum">
+
+<input type="text" name="urunid" />
+
+<input type="text" name="adet" />
+
+<input type="hidden" name="masaid" value="</?php echo $masaid; ?>" />
+
+<input type="button" id="btn" value="EKLE" />
+
+
+
+</form>
+
+--->
+
+
+
+</div>
+
+
+
+<!-- kat en sağ -->
+
+<div class="col-md-2  border-left" id="urunler">
+
+
+
+<?php $masam->urungrup($db); ?>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+<?php
+
+else:
+
+
+
+echo "hata var";
+
+
+
+endif;
+
+
+
+?>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
 </body>
+
 </head>

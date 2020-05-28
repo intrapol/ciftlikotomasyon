@@ -5,11 +5,11 @@
 <link rel="stylesheet" href="dosya/boost.css">
 <title>TEST</title>
 <style>
-#rows { 
+#rows {
 height:32px;
 }
 #masa {
-height:80px; 
+height:80px;
 margin:12px;
 font-size:35px;
 border-radius:15px;
@@ -19,17 +19,16 @@ border-radius:15px;
 	text-decoration:none;
 }
 </style>
-
 </head>
 <body>
-<div class="container-fluid"> 
-<div class="row table-dark" id="rows">  
+<div class="container-fluid">
+<div class="row table-dark" id="rows">
 <div class="col-md-3 border right">Toplam Sipariş : <a class="text-warning"><?php $sistem->siparistoplam($db);?></a></div>
 <div class="col-md-3 border right">Doluluk Oranı : <a class="text-warning">10</a></div>
 <div class="col-md-3 border right">Toplam Masa : <a class="text-warning"><?php $sistem->masatoplam($db);?> </a></div>
 <div class="col-md-3 border right">Tarih : <a class="text-warning">10</a></div>
 </div>
-<div class="row"> 
+<div class="row">
 <?php $sistem->masacek($db); ?>
 </div>
 </div>
