@@ -44,15 +44,19 @@ function benimsorum2($vt,$sorgu,$tercih) {
 @$islem=$_GET["islem"];
 switch ($islem) :
 case "hesap":
-	if (!$_POST):
-	echo "porsstam gelmiyorsun";
-	else:
-	$hesapalid=htmlspecialchars($_POST["masaid"]);
-	$sorgu="DELETE FROM anliksparis
-	WHERE masaid=$masaid";
-	$silme=$db->prepare($sorgu);
-	$silme->execute();
-	endif;
+echo "geldis";
+if (!$_POST):
+echo "posttan gelmiyorsun";
+else:
+
+$hesapalid=htmlspecialchars($_POST["hesapalid"]);
+
+$sorgu="DELETE FROM anliksiparis
+WHERE masaid=$hesapalid";
+$silme=$db->prepare($sorgu);
+$silme->execute();
+
+endif;
 
 break;
 
@@ -66,9 +70,9 @@ $silme=$db->prepare($sorgu);
 $silme->execute();
 endif;
 break;
- case "goster":
+case "goster":
 $id=htmlspecialchars($_GET["id"]);
-    $a="select * from anliksiparis where masaid=$id";
+		$a="select * from anliksiparis where masaid=$id";
 	$d=benimsorum2($db,$a,1);
 	if ($d->num_rows==0) :
 	echo '<div class="alert alert-danger mt-4 text-center">Henüz sipariş yok.</div>';
@@ -88,35 +92,35 @@ $id=htmlspecialchars($_GET["id"]);
 	$adet=0;
 	$sontutar=0;
 $masaid=0;
-	  while ($gelenson=$d->fetch_assoc()) :
+		while ($gelenson=$d->fetch_assoc()) :
 	$tutar = $gelenson["adet"] * $gelenson["urunfiyat"];
 	$adet +=$gelenson["adet"];
-  $sontutar +=$tutar;
+	$sontutar +=$tutar;
 	$masaid=$gelenson["masaid"];
-	  echo '<tr>
-	  <td>'.$gelenson["urunad"].'</td>
-	  <td>'.$gelenson["adet"].'</td>
-	  <td>'.$tutar.'</td>
-	  <td id="yakala"><a class="btn btn-danger mt-2 text-white" sectionId="'.$gelenson["urunid"].'">SİL</a></td>
-	  </tr>';
+		echo '<tr>
+		<td>'.$gelenson["urunad"].'</td>
+		<td>'.$gelenson["adet"].'</td>
+		<td>'.$tutar.'</td>
+		<td id="yakala"><a class="btn btn-danger mt-2 text-white" sectionId="'.$gelenson["urunid"].'">SİL</a></td>
+		</tr>';
 	endwhile;
 	echo '<tr class="table-danger">
 	 <td><b> TOPLAM</b></td>
-	  <td><b>'.$adet.'</b></td>
-       <td colspan="2"><b>'.$sontutar.'</b></td>
-	  </tr>
-	  </tbody></table>
-	  <div class="row">
-	  <div class="col-md-12">
+		<td><b>'.$adet.'</b></td>
+			 <td colspan="2"><b>'.$sontutar.'</b></td>
+		</tr>
+		</tbody></table>
+		<div class="row">
+		<div class="col-md-12">
 	 <form id="hesapform">
 
 
-	 <input type="hidden" name="hesapalid" value="'.$masaid.'" />
+	 <input type="hidden" name="hesapalid" value="'.$id.'" />
 	 <input type="button" id="btnn" value="HESABI AL" class="btn btn-danger btn-block mt-4" />
 	 </form>
-	  </div>
-	  </div>
-	  ';
+		</div>
+		</div>
+		';
 	endif;
 break;
 case "ekle":
