@@ -41,13 +41,37 @@ function benimsorum2($vt,$sorgu,$tercih) {
 	return $c=$b->get_result();
 	endif;
 	}
+	function uyari($mesaj,$renk){
+		echo '<div class="alert alert-'.$renk.' mt-4 text-center">'.$mesaj.'</div>';
+
+	}
 @$islem=$_GET["islem"];
 switch ($islem) :
 case "hesap":
-echo "geldis";
 if (!$_POST):
 echo "posttan gelmiyorsun";
 else:
+$masaid=$_POST["hesapalid"];
+$sorgu="SELECT * FROM anliksiparis WHERE masaid=$masaid";
+$verilecek=benimsorum2($db,$sorgu,1);
+while($son=$verilecek->fetch_assoc())
+{
+$a=$son["masaid"];
+$b=$son["urunid"];
+$c=$son["urunad"];
+$d=$son["urunfiyat"];
+$e=$son["adet"];
+$bugun = date("Y-m-d");
+
+
+	$raporekle="INSERT INTO `rapor` (`masaid`, `urunid`, `urunad`, `urunfiyat`, `adet`, `tarih`)
+VALUES ('$a', '$b', '$c', '$d', '$e', '$bugun')";
+	$raporekle=$db->prepare($raporekle);
+	$raporekle->execute();
+}
+
+
+
 
 $hesapalid=htmlspecialchars($_POST["hesapalid"]);
 
@@ -62,52 +86,52 @@ break;
 
 case "sil":
 if (!$_POST):
-echo "porsstam gelmiyorsun";
+echo "post ile  gelmiyorsun";
 else:
 $gelenid=htmlspecialchars($_POST["urunid"]);
-$sorgu="delete from anliksiparis where urunid=$gelenid";
+$sorgu="DELETE FROM anliksiparis WHERE urunid=$gelenid";
 $silme=$db->prepare($sorgu);
 $silme->execute();
 endif;
 break;
 case "goster":
 $id=htmlspecialchars($_GET["id"]);
-		$a="select * from anliksiparis where masaid=$id";
+		$a="SELECT * FROM anliksiparis WHERE masaid=$id";
 	$d=benimsorum2($db,$a,1);
 	if ($d->num_rows==0) :
-	echo '<div class="alert alert-danger mt-4 text-center">Henüz sipariş yok.</div>';
+	uyari("Henüz Sparis yok","danger");
 	else:
 	echo '<table class="table">
 	<thead>
 	<tr>
-	<th scope="col">Ürün Adı</th>
-	<th scope="col">Adet</th>
-	<th scope="col">Tutar</th>
-	<th scope="col">İşlem</th>
+	<th scope="col" class="text-warning bg-dark">Ürün Adı</th>
+	<th scope="col"  class="text-warning bg-dark">Adet</th>
+	<th scope="col"  class="text-warning bg-dark">Tutar</th>
+	<th scope="col"  class="text-warning bg-dark">İşlem</th>
 	</tr>
 	</thead>
 	<tbody>
 	<div class="sonuc2"></div>
 	';
-	$adet=0;
-	$sontutar=0;
-$masaid=0;
-		while ($gelenson=$d->fetch_assoc()) :
-	$tutar = $gelenson["adet"] * $gelenson["urunfiyat"];
-	$adet +=$gelenson["adet"];
-	$sontutar +=$tutar;
-	$masaid=$gelenson["masaid"];
-		echo '<tr>
-		<td>'.$gelenson["urunad"].'</td>
-		<td>'.$gelenson["adet"].'</td>
-		<td>'.$tutar.'</td>
-		<td id="yakala"><a class="btn btn-danger mt-2 text-white" sectionId="'.$gelenson["urunid"].'">SİL</a></td>
-		</tr>';
-	endwhile;
-	echo '<tr class="table-danger">
-	 <td><b> TOPLAM</b></td>
-		<td><b>'.$adet.'</b></td>
-			 <td colspan="2"><b>'.$sontutar.'</b></td>
+		$adet=0;
+		$sontutar=0;
+		$masaid=0;
+			while ($gelenson=$d->fetch_assoc()) :
+								$tutar = $gelenson["adet"] * $gelenson["urunfiyat"];
+								$adet +=$gelenson["adet"];
+								$sontutar +=$tutar;
+								$masaid=$gelenson["masaid"];
+									echo '<tr>
+									<td>'.$gelenson["urunad"].'</td>
+									<td>'.$gelenson["adet"].'</td>
+									<td>'.$tutar.'</td>
+									<td id="yakala"><a class="btn btn-danger mt-2 text-white" sectionId="'.$gelenson["urunid"].'">SİL</a></td>
+									</tr>';
+			endwhile;
+	echo '<tr class="bg-dark text-center text-warning">
+	 <td> TOPLAM</b></td>
+		<td>'.$adet.'</b></td>
+			 <td colspan="3"><b>'.$sontutar.'₺</b></td>
 		</tr>
 		</tbody></table>
 		<div class="row">
@@ -129,7 +153,7 @@ if ($_POST) :
 @$urunid=htmlspecialchars($_POST["urunid"]);
 @$adet=htmlspecialchars($_POST["adet"]);
 if ($masaid==""  || $urunid==""  || $adet=="" ) :
-echo '<div class="alert alert-danger mt-4 text-center">Boş alan bırakma</div>';
+uyari("Boş alan bırakma","danger");
 else:
 $varmi="select * from anliksiparis where urunid=$urunid and masaid=$masaid";
 $var=benimsorum2($db,$varmi,1);
@@ -140,7 +164,7 @@ $islemid=$urundizi["id"];
 $guncel="UPDATE anliksiparis set adet=$sonadet where id=$islemid";
 $guncelson=$db->prepare($guncel);
 $guncelson->execute();
-echo '<div class="alert alert-success mt-4 text-align">Adet Güncellendi</div>';
+uyari("Adet Güncellendi","success");
 else:
  $a="select * from urunler where id=$urunid";
  $d=benimsorum2($db,$a,1);
@@ -150,11 +174,12 @@ else:
 $ekle="insert into anliksiparis (masaid,urunid,urunad,urunfiyat,adet) VALUES ($masaid,$urunid,'$urunad','$urunfiyat',$adet)";
 $ekleson=$db->prepare($ekle);
 $ekleson->execute();
-echo '<div class="alert alert-success mt-4 text-align">Eklendi</div>';
+uyari("Eklendi","success");
+
 endif;
 endif;
 else:
-echo '<div class="alert alert-danger mt-4 text-align">HATA VAR</div>';
+	uyari("HATA VAR","danger");
 endif;
 break;
 case "urun" :

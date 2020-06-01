@@ -15,15 +15,34 @@ class sistem {
 	function masacek($dv) {
 	$masalar = "select * from masalar";
     $sonuc=$this->benimsorum($dv,$masalar,1);
-	while ($masason=$sonuc->fetch_assoc()) :
+		$bos=0;
+		$dolu=0;
+	while ($masason=$sonuc->fetch_assoc()) {
 	/// her sorguda maasaanlik siparis gider ve bu id varmı diye bakar
 	$siparisler = 'select * from anliksiparis where masaid='.$masason["id"].'';
-  $this->benimsorum($dv,$siparisler,1)->num_rows==0 ? $renk="danger" : $renk="success" ;
+
+
+	$this->benimsorum($dv,$siparisler,1)->num_rows==0 ? $renk="danger" : $renk="success" ;
+	$this->benimsorum($dv,$siparisler,1)->num_rows==0 ? $bos++ : $dolu++ ;
 //renk burada
 	echo '<div id="mas" class="col-md-2 col-sm-6 mr-2 mx-auto p-2 text-center text-white">
 	<a href="masadetay.php?masaid='.$masason["id"].'">
 	<div class="bg-'.$renk.'" id="masa">'.$masason["ad"].'</div></div></a>';
-	endwhile;
+}
+		$dol="UPDATE doluluk set bos=$bos, dolu=$dolu WHERE id=1";
+		$dolson=$dv->prepare($dol);
+		$dolson->execute();
+
+	}
+// MNASALARIN DOLULUK ORANLARINI GÖSTERİR
+	function doluluk($dv){
+				$son=$this->benimsorum($dv,"SELECT * FROM doluluk",1);
+				$veriler=$son->fetch_assoc();
+				$toplam= $veriler["bos"] + $veriler["dolu"];
+				$oran = ($veriler["dolu"] / $toplam)*100;
+				echo $oran=substr($oran,0,5). " %";
+
+
 	}
 	//masa detay fonksiyon
 	function masagetir ($vt,$id) {
