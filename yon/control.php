@@ -2,7 +2,7 @@
 <?php
 include_once("fonk/yonfok.php");
 $yonclass= new yonetim;
-$yonclass->cookcon($vt);
+$yonclass->cookcon($vt,2);
  ?>
 
 <html lang="tr">
@@ -57,7 +57,7 @@ $yonclass->cookcon($vt);
         </div>
         <div class="row">
           <div class="col-md-12 bg-light p-2 pl-3 border-bottom text-white">
-            <a href="#" id="lk">Masa Yönetimi </a>
+            <a href="control.php?islem=masayon" id="lk">Masa Yönetimi </a>
 
           </div>
         </div>
@@ -121,13 +121,39 @@ $yonclass->cookcon($vt);
     <div class="col-md-10">
         <div class="row bg-light" id="div2">
           <div class="col-md-12 mt-4" id="div1">
+
+
+
+
+
+
             <?php
               $islem=$_GET["islem"];
               switch ($islem) {
                 case 'cikis':
-                  $yonclass->kulad($yonclass->kulad($vt));
-                  break;
+                $kullanıcıadi=$yonclass->kulad($vt);
+                $yonclass->cikis($kullanıcıadi);
+                break;
+                  case 'masayon':
+                  $yonclass->masayon($vt);
 
+
+                  break;
+                  case 'masasil':
+                  $yonclass->masasil($vt);
+
+
+
+
+                  break;
+                    case 'bos':
+
+                    echo'
+                    <br><br><br><br>
+
+                    <div class="alert alert-success"><-----------LÜTFEN BİR İŞLEM SEÇİNİZ</div>';
+
+                    break;
                 default:
                   // code...
                   break;
@@ -135,7 +161,6 @@ $yonclass->cookcon($vt);
              ?>
           </div>
         </div>
-
 
 
     </div>

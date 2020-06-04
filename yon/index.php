@@ -1,7 +1,7 @@
 <?php
 include_once("fonk/yonfok.php");
 $clas= new yonetim;
-$clas->cookcon($vt,true);
+$clas->cookcon($vt,1);
 
 ?>
 
