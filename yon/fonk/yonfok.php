@@ -26,16 +26,83 @@ function masasil($vt){
     $this->genelsorgu($vt,"DELETE FROM masalar WHERE id=$masaid");
     $this->uyari("success","MASA BASARIYLA SİLİNDİ.","control.php?islem=masayon");
   }else {
-    $this->uyari("success","HATA OLUŞTU.","control.php?islem=masayon");
+    $this->uyari("danger","HATA OLUŞTU.","control.php?islem=masayon");
 
   }
 }
+function masaguncel($vt){
+echo ' <div class="col-md-3 text-center mx-auto mt-5 table-bordered">';
+
+if(isset($_POST["buton"])){
+    @$masaad=htmlspecialchars($_POST["masaad"]);
+    @$masaid=htmlspecialchars($_POST["masaid"]);
+    if ($masaad=="" && $masaid=="") {
+      $this->uyari("danger","HATA YAPTINIZ TEKRARDAN DENEYİNİZ...","control.php?islem=masayon");
+    }
+    else {
+        $this->genelsorgu($vt,"UPDATE masalar SET ad='$masaad' WHERE id=$masaid");
+        $this->uyari("success","GÜNCELLEME BAŞARILI","control.php?islem=masayon");
+    }
+}
+else{
+  @$masaid=$_GET["masaid"];
+$aktar=$this->genelsorgu($vt,"SELECT * FROM  masalar WHERE id=$masaid")->fetch_assoc();
+
+echo '
+
+    <form class="" action="" method="post">
+      <div class="col-md-12 table-light"><h4>Masa Güncelle</h4></div>
+      <div class="col-md-12 table-light">
+        <input type="text" name="masaad" value="'.$aktar["ad"].'" class="form-control">
+      </div>
+      <div class="col-md-12 table-light">
+        <input type="submit" name="buton"  value="Gönder" class="btn btn-success mt-3 mb-3">
+      </div>
+      <input type="hidden" name="masaid" value="'.$aktar["id"].'"   />
+    </form>
+';
+}
+echo '</div>';
+}
+function masaekle($vt){
+
+  echo ' <div class="col-md-3 text-center mx-auto mt-5 table-bordered">';
+
+  if(isset($_POST["buton"])){
+      @$masaad=htmlspecialchars($_POST["masaad"]);
+            if ($masaad=="") {
+        $this->uyari("danger","HATA YAPTINIZ TEKRARDAN DENEYİNİZ...","control.php?islem=masayon");
+      }
+      else {
+          $this->genelsorgu($vt,"INSERT INTO masalar (ad) VALUES ('$masaad')");
+          $this->uyari("success","EKLEME YAPILDI...","control.php?islem=masayon");
+      }
+  }
+  else{
+  echo '
+
+      <form class="" action="" method="post">
+        <div class="col-md-12 table-light"><h4>Masa Ekle</h4></div>
+        <div class="col-md-12 table-light">
+          <input type="text" name="masaad"  class="form-control mt-3">
+        </div>
+        <div class="col-md-12 table-light">
+          <input type="submit" name="buton"  value="Gönder" class="btn btn-success mt-3 mb-3">
+        </div>
+              </form>
+  ';
+  }
+  echo '</div>';
+
+}
+
+
 function masayon($vt){
 $so=$this->genelsorgu($vt,"SELECT * FROM masalar");
 echo '<table class="table text-center table-striped table-bordered mx-auto col-md-7 mt-4">
   <thead>
     <tr>
-      <th scope="col">Masa Adı</th>
+      <th scope="col"><a href="control.php?islem=masaekle" class="btn btn-success">EKLE+</a>  Masa Adı</th>
       <th scope="col">Güncelle</th>
       <th scope="col">Sil</th>
     </tr>
@@ -60,6 +127,8 @@ echo '
 
 </table>';
 }
+
+
 function toplamUrunAdet($vt){
    $gelensonuc=$this->genelsorgu($vt,"SELECT SUM(adet) FROM anliksiparis")->fetch_assoc();
 
@@ -108,7 +177,7 @@ public function giriskont($r,$k,$s){
           $this->uyari("danger","Bilgiler hatalı","index.php");
   }
           else{
-            $this->uyari("success","Bilgiler Doğru","control.php?islem=bos");
+            $this->uyari("success","Bilgiler doğru. Giriş yapılıyor","control.php?islem=bos");
 
             $kulson=md5(sha1(md5($k)));
             setcookie("kulad",$kulson ,time() + 60*60);
@@ -117,6 +186,9 @@ public function giriskont($r,$k,$s){
         }
 
 }
+
+
+
 public function cookcon($db,$durum){
   if (isset($_COOKIE["kulad"])) {
     $deger=$_COOKIE["kulad"];

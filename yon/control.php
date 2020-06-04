@@ -136,15 +136,15 @@ $yonclass->cookcon($vt,2);
                 break;
                   case 'masayon':
                   $yonclass->masayon($vt);
-
-
+                  break;
+                  case 'masaguncel':
+                  $yonclass->masaguncel($vt);
                   break;
                   case 'masasil':
                   $yonclass->masasil($vt);
-
-
-
-
+                  break;
+                  case 'masaekle':
+                  $yonclass->masaekle($vt);
                   break;
                     case 'bos':
 
