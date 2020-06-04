@@ -63,7 +63,7 @@ $yonclass->cookcon($vt,2);
         </div>
         <div class="row">
           <div class="col-md-12 bg-light p-2 pl-3 border-bottom text-white">
-            <a href="#" id="lk">Ürün Yönetimi</a>
+            <a href="control.php?islem=urunyon" id="lk">Ürün Yönetimi</a>
 
           </div>
         </div>
@@ -145,6 +145,15 @@ $yonclass->cookcon($vt,2);
                   break;
                   case 'masaekle':
                   $yonclass->masaekle($vt);
+                  break;
+                  case 'urunyon':
+                  $yonclass->urunyon($vt);
+                  break;
+                  case 'urunsil':
+                  $yonclass->urunsil($vt);
+                  break;
+                  case 'urunguncel':
+                  $yonclass->urunguncel($vt);
                   break;
                     case 'bos':
 

@@ -127,6 +127,106 @@ echo '
 
 </table>';
 }
+function urunyon($vt){
+  $so=$this->genelsorgu($vt,"SELECT * FROM urunler");
+  echo '<table class="table text-center table-striped table-bordered mx-auto col-md-7 mt-4">
+    <thead>
+      <tr>
+        <th scope="col"><a href="control.php?islem=urunekle" class="btn btn-success">EKLE+</a> Urun Adı</th>
+        <th scope="col">Güncelle</th>
+        <th scope="col">Sil</th>
+      </tr>
+      <tbody>';
+  while ($sonuc=$so->fetch_assoc()) {
+    echo '
+          <tr>
+            <td>'.$sonuc["ad"].'</td>
+            <td><a href="control.php?islem=urunguncel&urunid='.$sonuc["id"].'" class="btn btn-warning">Güncelle</td>
+            <td><a href="control.php?islem=urunsil&urunid='.$sonuc["id"].'" class="btn btn-danger">Sil</td>
+
+
+
+          </tr>
+
+
+    ';
+  }
+  echo '
+  </tbody>
+  </thead>
+
+  </table>';
+}
+function urunsil($vt){
+  $urunid=$_GET["urunid"];
+  if ($urunid!="" && is_numeric($urunid)) {
+    $this->genelsorgu($vt,"DELETE FROM urunler WHERE id=$urunid");
+    $this->uyari("success","ÜRÜN BAŞARIYLA SİLİNDİ.","control.php?islem=urunyon");
+  }else {
+    $this->uyari("danger","HATA OLUŞTU.","control.php?islem=masayon");
+
+  }
+}
+function urunguncel($vt){
+  echo ' <div class="col-md-3 text-center mx-auto mt-5 table-bordered">';
+
+  if(isset($_POST["buton"])){
+      @$urunad=htmlspecialchars($_POST["urunad"]);
+      @$urunid=htmlspecialchars($_POST["urunid"]);
+      @$fiyat=htmlspecialchars($_POST["fiyat"]);
+      @$katid=htmlspecialchars($_POST["katid"]);
+
+      if ($urunad=="" && $urunid=="" && $katid=="" && $fiyat="") {
+        $this->uyari("danger","HATA YAPTINIZ TEKRARDAN DENEYİNİZ...","control.php?islem=urunyon");
+      }
+      else {
+          $this->genelsorgu($vt,"UPDATE urunler SET ad='$urunad', fiyat='$fiyat', katid=$katid where id=$urunid");
+          $this->uyari("success","ÜRÜN GÜNCELLEME BAŞARILI","control.php?islem=urunyon");
+      }
+  }
+  else{
+    @$urunid=$_GET["urunid"];
+  $aktar=$this->genelsorgu($vt,"SELECT * FROM  urunler WHERE id=$urunid")->fetch_assoc();
+
+  ?>
+
+<form class="<?php $_SERVER['PHP_SELF']; ?>" action="" method="post">
+  <?php
+
+
+      echo '  <div class="col-md-12 table-light"><h4>Ürün Güncelle</h4></div>
+        <div class="col-md-12 table-light">
+          <input type="text" name="urunad" value="'.$aktar["ad"].'" class="form-control">
+        </div>
+        <div class="col-md-12 table-light">
+          <input type="text" name="fiyat" value="'.$aktar["fiyat"].'" class="form-control">
+          <input type="hidden" name="urunid" value="'.$aktar["id"].'" class="form-control">
+
+
+
+        </div>';
+          $katid=$aktar["katid"];
+          $katcek=$this->genelsorgu($vt,"SELECT * FROM  kategori");
+          echo '<select name="katid">';
+          while ($katson=$katcek->fetch_assoc()) {
+            //if ($katson["id"]==$katid) {
+              //echo '<option value="'.$katid.'" selected=selected>'.$katson["ad"].'</option>';
+            //}
+            echo '<option value="'.$katid.'">'.$katson["ad"].'</option>';
+
+          }
+            echo ' </select>';
+
+
+  echo    '<div class="col-md-12 table-light">
+          <input type="submit" name="buton"  value="Gönder" class="btn btn-success mt-3 mb-3">
+        </div>
+        <input type="hidden" name="masaid" value="'.$aktar["id"].'"   />
+      </form>
+  ';
+  }
+  echo '</div>';
+}
 
 
 function toplamUrunAdet($vt){
