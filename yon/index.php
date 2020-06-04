@@ -1,5 +1,7 @@
 <?php
 include_once("fonk/yonfok.php");
+$clas= new yonetim;
+$clas->cookcon($vt,true);
 
 ?>
 
@@ -51,7 +53,7 @@ include_once("fonk/yonfok.php");
                 header("refresh:2,url=index.php");
             }
             else{
-                yonetim::giriskont($vt,$kulad,$sifre);
+                $clas->giriskont($vt,$kulad,$sifre);
 
             }
           }
