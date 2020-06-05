@@ -69,13 +69,19 @@ $yonclass->cookcon($vt,2);
         </div>
         <div class="row">
           <div class="col-md-12 bg-light p-2 pl-3 border-bottom text-white">
-            <a href="#" id="lk">Rapor Yönetimi</a>
+            <a href="control.php?islem=katyon" id="lk">Kategori Yönetimi</a>
 
           </div>
         </div>
         <div class="row">
           <div class="col-md-12 bg-light p-2 pl-3 border-bottom text-white">
-            <a href="#" id="lk">Şifre Değiştir</a>
+            <a href="control.php?islem=raporyon" id="lk">Rapor Yönetimi</a>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 bg-light p-2 pl-3 border-bottom text-white">
+            <a href="control.php?islem=sifredegis" id="lk">Şifre Değiştir</a>
 
           </div>
         </div>
@@ -122,13 +128,11 @@ $yonclass->cookcon($vt,2);
         <div class="row bg-light" id="div2">
           <div class="col-md-12 mt-4" id="div1">
 
-
-
-
+          
 
 
             <?php
-              $islem=$_GET["islem"];
+              @$islem=$_GET["islem"];
               switch ($islem) {
                 case 'cikis':
                 $kullanıcıadi=$yonclass->kulad($vt);
@@ -147,7 +151,13 @@ $yonclass->cookcon($vt,2);
                   $yonclass->masaekle($vt);
                   break;
                   case 'urunyon':
-                  $yonclass->urunyon($vt);
+                  $yonclass->urunyon($vt,0);
+                  break;
+                   case 'katgore':
+                  $yonclass->urunyon($vt,2);
+                  break;
+                   case 'aramasonuc':
+                  $yonclass->urunyon($vt,1);
                   break;
                   case 'urunsil':
                   $yonclass->urunsil($vt);
@@ -155,6 +165,29 @@ $yonclass->cookcon($vt,2);
                   case 'urunguncel':
                   $yonclass->urunguncel($vt);
                   break;
+                  case 'urunekle':
+                  $yonclass->urunekle($vt);
+                  break;
+                   case 'katyon':
+                  $yonclass->katyon($vt);
+                  break;
+                  case 'katekle':
+                  $yonclass->katekle($vt);
+                  break;
+                  case 'katguncel':
+                  $yonclass->katguncel($vt);
+                  break;
+                  case 'katsil':
+                  $yonclass->katsil($vt);
+                  break;
+                  case 'sifredegis':
+                  $yonclass->sifredegis($vt);
+                  break;
+                  case 'raporyon':
+                  $yonclass->rapor($vt);
+                  break;
+
+
                     case 'bos':
 
                     echo'
@@ -164,7 +197,10 @@ $yonclass->cookcon($vt,2);
 
                     break;
                 default:
-                  // code...
+                  echo'
+                    <br><br><br><br>
+
+                    <div class="alert alert-success"><-----------LÜTFEN BİR İŞLEM SEÇİNİZ</div>';
                   break;
               }
              ?>
