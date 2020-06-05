@@ -633,7 +633,7 @@ function rapor($vt){
                     $this->genelsorgu($vt,"INSERT INTO gecicimasa (masaid,masaad,hasilat,adet)  VALUES($id,'$masaad',$has,$adet)");
                     }else{
                       $raporson=$raporbak->fetch_assoc();
-                      $gelenadet=$reporson["adet"];
+                      $gelenadet=$raporson["adet"];
                       $gelenhas=$raporson["hasilat"];
 
                       $sonhasilat=$gelenhas +  ($gel["adet"] * $gel["urunfiyat"]);
@@ -708,7 +708,7 @@ function rapor($vt){
                     $this->genelsorgu($vt,"INSERT INTO geciciurun (urunid,urunad,hasilat,adet)  VALUES($id,'$urunad',$has,$adet)");
                     }else{
                       $raporson=$raporbak->fetch_assoc();
-                      $gelenadet=$reporson["adet"];
+                      $gelenadet=$raporson["adet"];
                       $gelenhas=$raporson["hasilat"];
 
                       $sonhasilat=$gelenhas +  ($gel["adet"] * $gel["urunfiyat"]);
