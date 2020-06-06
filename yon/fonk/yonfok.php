@@ -555,8 +555,8 @@ function rapor($vt){
         break;
         case 'dun':
         $veri=$this->genelsorgu($vt,"Truncate gecicimasa");$veri=$this->genelsorgu($vt,"Truncate geciciurun");
-             $veri=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih = DATE_SUB(CURDATE(), İNTERVAL 1 DAY)");
-             $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih = DATE_SUB(CURDATE(), İNTERVAL 1 DAY)");
+             $veri=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih = DATE_SUB(CURDATE(), INTERVAL 1 DAY)");
+             $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih = DATE_SUB(CURDATE(), INTERVAL 1 DAY)");
 
         
         break;case 'hafta':
@@ -566,13 +566,26 @@ function rapor($vt){
               
         break;case 'ay':
         $veri=$this->genelsorgu($vt,"Truncate gecicimasa");$veri=$this->genelsorgu($vt,"Truncate geciciurun");
-               $veri=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih >= DATE_SUB(CURDATE(), İNTERVAL 1 MONTH)");
-               $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih >= DATE_SUB(CURDATE(), İNTERVAL 1 MONTH)");
+               $veri=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)");
+               $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)");
         
         break;case 'tum':
         $veri=$this->genelsorgu($vt,"Truncate gecicimasa");$veri=$this->genelsorgu($vt,"Truncate geciciurun");
                $veri=$this->genelsorgu($vt,"SELECT * FROM rapor");
                $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor");
+
+        
+        break;
+      break;case 'tarih':
+        $veri=$this->genelsorgu($vt,"Truncate gecicimasa");
+        $veri=$this->genelsorgu($vt,"Truncate geciciurun");
+        $tarih1=$_POST["tarih1"];
+        $tarih2=$_POST["tarih2"];
+        echo ' <div class="alert alert-info text-center mx-auto mt-4">'.$tarih1.'-'.$tarih2.'</div>';
+
+
+               $veri=$this->genelsorgu($vt,"SELECT * FROM rapor where DATE(tarih) BETWEEN '$tarih1' AND '$tarih2'");
+               $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor where DATE(tarih) BETWEEN '$tarih1' AND '$tarih2'");
 
         
         break;
@@ -597,8 +610,12 @@ function rapor($vt){
                 <th><a href="control.php?islem=raporyon&tar=hafta">Bu Hafta</a></th>
                 <th><a href="control.php?islem=raporyon&tar=ay">Bu Ay</a></th>
                 <th><a href="control.php?islem=raporyon&tar=tum">Tüm zamanlar</a></th>
-                <th colspan="2">input gelecek</th>
-                <th>button gelecek </th>
+                <th colspan="2"><form action="control.php?islem=raporyon&tar=tarih" method="post">
+                <input type="date" name="tarih1" class="form-control col-md-12">
+                <input type="date" name="tarih2" class="form-control col-md-12">
+
+                </th>
+                <th><input name="buton" type="submit" class="btn btn-success" value="GETİR"></form></th>
               </tr>
             </thead>
             <tbody>
