@@ -44,6 +44,19 @@ $yonclass->cookcon($vt,2);
 
 </style>
 
+
+<script language="javascript">
+ function ortasayfa(url,winName,w,h,scroll){
+  LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+  TopPosition = (screen.height) ? (screen.height-w)/2 : 0;
+  settings='height='+h+', width='+w+' , top='+TopPosition+', left='+LeftPosition+', scrollbars='+scroll+',resizable'
+  
+  popupWindow=window.open(url,winName,settings)
+
+ }
+</script>
+
+
   <body>
 <div class="container-fluid bg-light">
   <div class="row row-fluid">

@@ -12,6 +12,14 @@ class sistem {
 	return $c=$b->get_result();
 	endif;
 	}
+	function benimsorum2($vt,$sorgu,$tercih) {
+		$a =$sorgu;
+		$b=$vt->prepare($a);
+		$b->execute();
+		if ($tercih==1):
+		return $c=$b->get_result();
+		endif;
+		}
 	function masacek($dv) {
 	$masalar = "select * from masalar";
     $sonuc=$this->benimsorum($dv,$masalar,1);

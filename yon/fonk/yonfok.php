@@ -9,6 +9,12 @@ private function genelsorgu($dv,$sorgu){ // yapılacak birden fazla veritabanaı
   $sorgum->execute();
   return  $sorguson=$sorgum->get_result();
 }
+ function ciktiicinSorgu($dv,$sorgu){ // yapılacak birden fazla veritabanaı sorgusunu burada kısaca çalıştırmak
+
+  $sorgum=$dv->prepare($sorgu);
+  $sorgum->execute();
+  return  $sorguson=$sorgum->get_result();
+}
 function kulad($db){  //  yöneticinin ismini getirir
     $gelensonuc=$this->genelsorgu($db,"select * from yonetim")->fetch_assoc();
     return $gelensonuc["kulad"];
@@ -615,7 +621,13 @@ function rapor($vt){
                 <input type="date" name="tarih2" class="form-control col-md-12">
 
                 </th>
-                <th><input name="buton" type="submit" class="btn btn-success" value="GETİR"></form></th>
+                <th>';
+                
+                if(@$tarih1!="" || @$tarih2!=""){
+                  echo '<p><a href="cikti.php?islem=ciktial&tar1='.$tarih1.'&tar2='.$tarih2.'" onclick="ortasayfa(this.href,\'mywindow\',\'900\',\'800\',\'yes\');return false">Çıktı Al</a></p>';
+                }
+                
+                echo '<input name="buton" type="submit" class="btn btn-success" value="GETİR"></form></th>
               </tr>
             </thead>
             <tbody>

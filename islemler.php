@@ -28,7 +28,16 @@ $('#yakala a').click(function() {
 	window.location.reload();
 	})
 })
+
 });
+function ortasayfa(url,winName,w,h,scroll){
+  LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+  TopPosition = (screen.height) ? (screen.height-w)/2 : 0;
+  settings='height='+h+', width='+w+' , top='+TopPosition+', left='+LeftPosition+', scrollbars='+scroll+',resizable'
+  
+  popupWindow=window.open(url,winName,settings)
+
+ }
 </script>
 </head>
 <body>
@@ -124,14 +133,14 @@ $id=htmlspecialchars($_GET["id"]);
 									echo '<tr>
 									<td>'.$gelenson["urunad"].'</td>
 									<td>'.$gelenson["adet"].'</td>
-									<td>'.$tutar.'</td>
+									<td>'.number_format($tutar,2,'.',',').'</td>
 									<td id="yakala"><a class="btn btn-danger mt-2 text-white" sectionId="'.$gelenson["urunid"].'">SİL</a></td>
 									</tr>';
 			endwhile;
 	echo '<tr class="bg-dark text-center text-warning">
 	 <td> TOPLAM</b></td>
 		<td>'.$adet.'</b></td>
-			 <td colspan="3"><b>'.$sontutar.'₺</b></td>
+			 <td colspan="3"><b>'.number_format($sontutar,2,'.',',').'₺</b></td>
 		</tr>
 		</tbody></table>
 		<div class="row">
@@ -141,7 +150,13 @@ $id=htmlspecialchars($_GET["id"]);
 
 	 <input type="hidden" name="hesapalid" value="'.$id.'" />
 	 <input type="button" id="btnn" value="HESABI AL" class="btn btn-danger btn-block mt-4" />
+
+
+
+
 	 </form>
+
+	 <p><a href="fisbastir.php?masaid='.$id.'" onclick="ortasayfa(this.href,\'mywindow\',\'350\',\'400\',\'yes\');return false" class="btn btn-warning btn-block mt-4">Fiş Bastır</a></p>
 		</div>
 		</div>
 		';

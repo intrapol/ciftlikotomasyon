@@ -58,51 +58,25 @@ $dizi=$son->fetch_assoc();
 <img src="dosya/işarettik.png" alt="">
 </div>
 </div>
-
-
-
 <div class="row">
-
-
-
 <div class="col-md-12" class="div2">
-
-
-
 <div class="row" class="div2">
 
 <div class="col-md-6">
-
-
-
 <input type="hidden" name="masaid" value="<?php echo $dizi["id"]; ?>" />
-
 <input type="button" id="btn" value="EKLE" class="btn btn-success btn-block mt-4" />
 
-
-
 </div>
-
-
-
-
-
 
 
 <div class="col-md-6">
-
 <?php
-
 for ($i=1; $i<=13; $i++) :
-
 echo '<label class="btn btn-success m-2"><input name="adet" type="radio" value="'.$i.'" />'.$i.'</label>';
-
 endfor;
-
 ?>
 
 </form>
-
 </div>
 
 
@@ -110,15 +84,12 @@ endfor;
 
 
 
-
 </div>
 
 
 
 
-
 </div>
-
 
 
 </div>
@@ -130,95 +101,27 @@ endfor;
 
 
 <!--
-
 <form id="formum">
-
 <input type="text" name="urunid" />
-
 <input type="text" name="adet" />
-
 <input type="hidden" name="masaid" value="</?php echo $masaid; ?>" />
-
 <input type="button" id="btn" value="EKLE" />
-
-
-
 </form>
-
 --->
-
-
-
 </div>
-
-
-
 <!-- kat en sağ -->
 
 <div class="col-md-2  border-left" id="urunler">
-
-
-
 <?php $masam->urungrup($db); ?>
 
-
-
-
-
 </div>
-
-
-
-
-
-
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
-
-
-
 <?php
-
 else:
-
-
-
 echo "hata var";
-
-
-
 endif;
-
-
-
 ?>
-
-
-
 </div>
-
-
-
-
-
-
-
-
-
 </body>
-
 </head>
