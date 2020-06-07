@@ -21,7 +21,7 @@ function kulad($db){  //  yöneticinin ismini getirir
 }
 private function uyari($tip,$metin,$sayfa){ // kullanıcı girişinde girişin başarılı olup olmadığının uyarısını veriir
   echo '<div class="alert alert-'.$tip.'">'.$metin.'</div>';
-  header("refresh:2,url=".$sayfa);
+  header("refresh:2,url=$sayfa");
 
 }
 function masasil($vt){
