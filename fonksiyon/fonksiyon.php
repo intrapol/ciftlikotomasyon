@@ -20,6 +20,15 @@ class sistem {
 		return $c=$b->get_result();
 		endif;
 		}
+		function garsonbak($db){
+			@$gelen=$this->benimsorum($db,"SELECT * FROM  garson where durum=1",1)->fetch_assoc();
+			if(@$gelen["ad"]!=""){
+				echo @$gelen["ad"];
+
+			}else{
+				echo "NULL";
+			}
+		}
 	function masacek($dv) {
 	$masalar = "select * from masalar";
     $sonuc=$this->benimsorum($dv,$masalar,1);

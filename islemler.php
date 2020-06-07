@@ -197,6 +197,33 @@ else:
 	uyari("HATA VAR","danger");
 endif;
 break;
+		case "kontrol":
+				$id=htmlspecialchars($_POST["id"]);
+				$sifre=htmlspecialchars($_POST["sifre"]);				
+				if(@$id!="" && @$sifre!=""){
+					$var=benimsorum2($db,"SELECT * from garson where id='$id' and sifre=$sifre",1);
+					if($var->num_rows==0){
+						uyari("Bilgiler hatalı..","danger");
+					}else{
+						$garson=$var->fetch_assoc();	
+						$garsonid=$garson["id"];
+						benimsorum2($db,"UPDATE garson set durum=1 where id=$garsonid",1);
+						?>
+						<script> 
+						window.location.reload();
+						</script>
+						<?php
+					}	
+
+
+				}else{
+					uyari("Boş Alan Bırakmayınız. ","danger");
+				}
+		break;
+	case "garsoncikis":
+		benimsorum2($db,"UPDATE garson set durum=0 where durum=1",1);
+		header('Location: ./index.php');
+	break;
 case "urun" :
   $katid=htmlspecialchars($_GET["katid"]);
   $a="select * from urunler where katid=$katid";

@@ -1,7 +1,7 @@
 <?php
 $vt = new mysqli("localhost","serdar","123456","siparis") or die("BAŞARAMADIK ABİ .... NEYİ BAŞARAMADIN HAAM");
 $vt->set_charset("utf-8");
-
+ob_start();
 class yonetim{
 private function genelsorgu($dv,$sorgu){ // yapılacak birden fazla veritabanaı sorgusunu burada kısaca çalıştırmak
 
@@ -452,6 +452,7 @@ if(isset($_POST["buton"])){
     else {
         $this->genelsorgu($vt,"UPDATE kategori SET ad='$katad' WHERE id=$katid");
         $this->uyari("success","GÜNCELLEME BAŞARILI","control.php?islem=katyon");
+
     }
 }
 else{
