@@ -489,11 +489,11 @@ function katsil($vt){
 }
 ///////-------------------GARSON YÖNTİM------------------///////////
 function garsonyon($vt){
-  $so=$this->genelsorgu($vt,"SELECT * FROM kategori");
+  $so=$this->genelsorgu($vt,"SELECT * FROM garson");
   echo '<table class="table text-center table-striped table-bordered mx-auto col-md-7 mt-4">
     <thead>
       <tr>
-        <th scope="col"><a href="control.php?islem=katekle" class="btn btn-success">EKLE+</a>  Katagori Adı</th>
+        <th scope="col"><a href="control.php?islem=garsonekle" class="btn btn-success">EKLE+</a>  Garson Adı</th>
         <th scope="col">Güncelle</th>
         <th scope="col">Sil</th>
       </tr>
@@ -502,8 +502,8 @@ function garsonyon($vt){
     echo '
           <tr>
             <td>'.$sonuc["ad"].'</td>
-            <td><a href="control.php?islem=katguncel&katid='.$sonuc["id"].'" class="btn btn-warning">Güncelle</td>
-            <td><a href="control.php?islem=katsil&katid='.$sonuc["id"].'" class="btn btn-danger">Sil</td>
+            <td><a href="control.php?islem=garsonguncel&garsonid='.$sonuc["id"].'" class="btn btn-warning">Güncelle</td>
+            <td><a href="control.php?islem=garsonsil&garsonid='.$sonuc["id"].'" class="btn btn-danger">Sil</td>
   
   
   
@@ -523,13 +523,15 @@ function garsonyon($vt){
     echo ' <div class="col-md-3 text-center mx-auto mt-5 table-bordered">';
   
     if(isset($_POST["buton"])){
-        @$katad=htmlspecialchars($_POST["katad"]);
-              if ($katad=="") {
+        @$garsonad=htmlspecialchars($_POST["garsonad"]);
+        @$garsonsifre=htmlspecialchars($_POST["garsonsifre"]);
+
+              if ($garsonad=="" && $garsonsifre=="") {
           $this->uyari("danger","HATA YAPTINIZ TEKRARDAN DENEYİNİZ...","control.php?islem=katyon");
         }
         else {
-            $this->genelsorgu($vt,"INSERT INTO kategori (ad) VALUES ('$katad')");
-            $this->uyari("success","EKLEME YAPILDI...","control.php?islem=katyon");
+            $this->genelsorgu($vt,"INSERT INTO garson (ad,sifre) VALUES ('$garsonad',$garsonsifre)");
+            $this->uyari("success","EKLEME YAPILDI...","control.php?islem=garsonyon");
         }
     }
     else{
@@ -537,8 +539,11 @@ function garsonyon($vt){
   
         <form class="" action="" method="post">
         <div class="col-md-12 table-light"><h4>Garson  Ekle</h4></div>
-          <div class="col-md-12 table-light">
+          <div class="col-md-12 table-light">Garson Adı
             <input type="text" name="garsonad"  class="form-control mt-3">
+          </div>
+          <div class="col-md-12 table-light">Garson Şifresi
+            <input type="text" name="garsonsifre"  class="form-control mt-3">
           </div>
           <div class="col-md-12 table-light">
             <input type="submit" name="buton"  value="Gönder" class="btn btn-success mt-3 mb-3">
@@ -555,44 +560,59 @@ function garsonyon($vt){
   echo ' <div class="col-md-3 text-center mx-auto mt-5 table-bordered">';
   
   if(isset($_POST["buton"])){
-      @$katid=htmlspecialchars($_POST["katid"]);
-      @$katad=htmlspecialchars($_POST["katad"]);
-      if ($katad=="" && $katid=="") {
-        $this->uyari("danger","HATA YAPTINIZ TEKRARDAN DENEYİNİZ...","control.php?islem=katyon");
+     @$garsonid=htmlspecialchars($_POST["garsonid"]);
+      @$garsonad=htmlspecialchars($_POST["garsonad"]);
+      @$garsonsifre1=htmlspecialchars($_POST["garsonsifre1"]);
+      @$garsonsifre2=htmlspecialchars($_POST["garsonsifre2"]);
+      
+      if ($garsonad=="" && $garsonid=="" && $garsonsifre1=="" && $garsonsifre2=="") {
+        $this->uyari("danger","HATA YAPTINIZ TEKRARDAN DENEYİNİZ...","control.php?islem=garsonyon");
+       if($garsonsifre1!=$garsonsifre2){
+        $this->uyari("danger","HATA YAPTINIZ TEKRARDAN DENEYİNİZ...","control.php?islem=garsonyon");
+
+       }
       }
       else {
-          $this->genelsorgu($vt,"UPDATE kategori SET ad='$katad' WHERE id=$katid");
-          $this->uyari("success","GÜNCELLEME BAŞARILI","control.php?islem=katyon");
+          $this->genelsorgu($vt,"UPDATE garson SET ad= '$garsonad', sifre='$garsonsifre1' WHERE id= $garsonid");
+          $this->uyari("success","GÜNCELLEME BAŞARILI","control.php?islem=garsonyon");
   
       }
-  }
+    
+   }
   else{
-    @$katid=$_GET["katid"];
-  $aktar=$this->genelsorgu($vt,"SELECT * FROM  kategori WHERE id=$katid")->fetch_assoc();
+    @$garsonid=$_GET["garsonid"];
+  $aktar=$this->genelsorgu($vt,"SELECT * FROM  garson WHERE id=$garsonid")->fetch_assoc();
   
   echo '
   
       <form class="" action="" method="post">
         <div class="col-md-12 table-light"><h4>Masa Güncelle</h4></div>
-        <div class="col-md-12 table-light">
-          <input type="text" name="katad" value="'.$aktar["ad"].'" class="form-control">
+        <div class="col-md-12 table-light">Adı
+          <input type="text" name="garsonad" value="'.$aktar["ad"].'" class="form-control">
+        </div>
+        <div class="col-md-12 table-light">teni Şifre
+          <input type="text" name="garsonsifre1"  class="form-control">
+        </div>
+        <div class="col-md-12 table-light">Teni Şifre Terarı
+          <input type="text" name="garsonsifre2"  class="form-control">
         </div>
         <div class="col-md-12 table-light">
           <input type="submit" name="buton"  value="Gönder" class="btn btn-success mt-3 mb-3">
         </div>
-        <input type="hidden" name="katid" value="'.$aktar["id"].'"   />
+        <input type="hidden" name="garsonid" value="'.$aktar["id"].'"   />
+        
       </form>
   ';
   }
   echo '</div>';
   }
   function garsonsil($vt){
-    $katid=$_GET["katid"];
-    if ($katid!="" && is_numeric($katid)) {
-      $this->genelsorgu($vt,"DELETE FROM kategori WHERE id=$katid");
-      $this->uyari("success","KATEGORİ BASARIYLA SİLİNDİ.","control.php?islem=katyon");
+    $garsonid=$_GET["garsonid"];
+    if ($garsonid!="" && is_numeric($garsonid)) {
+      $this->genelsorgu($vt,"DELETE FROM garson WHERE id=$garsonid");
+      $this->uyari("success","GARSON BASARIYLA SİLİNDİ.","control.php?islem=garsonyon");
     }else {
-      $this->uyari("danger","HATA OLUŞTU.","control.php?islem=katyon");
+      $this->uyari("danger","HATA OLUŞTU.","control.php?islem=garsonyon");
   
     }
   }
@@ -980,8 +1000,9 @@ if ($sonhal!=$_COOKIE["kulad"]) {
       }
       else{
         if ($durum==2) {
-      //header("Location:index.php"); //çıkış işlemi  tekrardan kontrol edildiği için cookie kaybolduğu iin gerek yok
-        }
+          
+          //header("Location:index.php"); //çıkış işlemi  tekrardan kontrol edildiği için cookie kaybolduğu iin gerek yok
+            }
       }
   }
 }else{
