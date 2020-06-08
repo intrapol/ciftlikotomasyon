@@ -377,6 +377,8 @@ function urunekle($vt){
   }
   echo '</div>';
 }
+
+///katagori bölümüüüü------------------------------------------
 function katyon($vt){
 $so=$this->genelsorgu($vt,"SELECT * FROM kategori");
 echo '<table class="table text-center table-striped table-bordered mx-auto col-md-7 mt-4">
@@ -485,6 +487,116 @@ function katsil($vt){
 
   }
 }
+///////-------------------GARSON YÖNTİM------------------///////////
+function garsonyon($vt){
+  $so=$this->genelsorgu($vt,"SELECT * FROM kategori");
+  echo '<table class="table text-center table-striped table-bordered mx-auto col-md-7 mt-4">
+    <thead>
+      <tr>
+        <th scope="col"><a href="control.php?islem=katekle" class="btn btn-success">EKLE+</a>  Katagori Adı</th>
+        <th scope="col">Güncelle</th>
+        <th scope="col">Sil</th>
+      </tr>
+      <tbody>';
+  while ($sonuc=$so->fetch_assoc()) {
+    echo '
+          <tr>
+            <td>'.$sonuc["ad"].'</td>
+            <td><a href="control.php?islem=katguncel&katid='.$sonuc["id"].'" class="btn btn-warning">Güncelle</td>
+            <td><a href="control.php?islem=katsil&katid='.$sonuc["id"].'" class="btn btn-danger">Sil</td>
+  
+  
+  
+          </tr>
+  
+  
+    ';
+  }
+  echo '
+  </tbody>
+  </thead>
+  
+  </table>';
+  }
+  function garsonekle($vt){
+  
+    echo ' <div class="col-md-3 text-center mx-auto mt-5 table-bordered">';
+  
+    if(isset($_POST["buton"])){
+        @$katad=htmlspecialchars($_POST["katad"]);
+              if ($katad=="") {
+          $this->uyari("danger","HATA YAPTINIZ TEKRARDAN DENEYİNİZ...","control.php?islem=katyon");
+        }
+        else {
+            $this->genelsorgu($vt,"INSERT INTO kategori (ad) VALUES ('$katad')");
+            $this->uyari("success","EKLEME YAPILDI...","control.php?islem=katyon");
+        }
+    }
+    else{
+    echo '
+  
+        <form class="" action="" method="post">
+        <div class="col-md-12 table-light"><h4>Garson  Ekle</h4></div>
+          <div class="col-md-12 table-light">
+            <input type="text" name="garsonad"  class="form-control mt-3">
+          </div>
+          <div class="col-md-12 table-light">
+            <input type="submit" name="buton"  value="Gönder" class="btn btn-success mt-3 mb-3">
+          </div>
+                </form>
+    ';
+    }
+    echo '</div>';
+  
+  }
+  
+  
+  function garsonguncel($vt){
+  echo ' <div class="col-md-3 text-center mx-auto mt-5 table-bordered">';
+  
+  if(isset($_POST["buton"])){
+      @$katid=htmlspecialchars($_POST["katid"]);
+      @$katad=htmlspecialchars($_POST["katad"]);
+      if ($katad=="" && $katid=="") {
+        $this->uyari("danger","HATA YAPTINIZ TEKRARDAN DENEYİNİZ...","control.php?islem=katyon");
+      }
+      else {
+          $this->genelsorgu($vt,"UPDATE kategori SET ad='$katad' WHERE id=$katid");
+          $this->uyari("success","GÜNCELLEME BAŞARILI","control.php?islem=katyon");
+  
+      }
+  }
+  else{
+    @$katid=$_GET["katid"];
+  $aktar=$this->genelsorgu($vt,"SELECT * FROM  kategori WHERE id=$katid")->fetch_assoc();
+  
+  echo '
+  
+      <form class="" action="" method="post">
+        <div class="col-md-12 table-light"><h4>Masa Güncelle</h4></div>
+        <div class="col-md-12 table-light">
+          <input type="text" name="katad" value="'.$aktar["ad"].'" class="form-control">
+        </div>
+        <div class="col-md-12 table-light">
+          <input type="submit" name="buton"  value="Gönder" class="btn btn-success mt-3 mb-3">
+        </div>
+        <input type="hidden" name="katid" value="'.$aktar["id"].'"   />
+      </form>
+  ';
+  }
+  echo '</div>';
+  }
+  function garsonsil($vt){
+    $katid=$_GET["katid"];
+    if ($katid!="" && is_numeric($katid)) {
+      $this->genelsorgu($vt,"DELETE FROM kategori WHERE id=$katid");
+      $this->uyari("success","KATEGORİ BASARIYLA SİLİNDİ.","control.php?islem=katyon");
+    }else {
+      $this->uyari("danger","HATA OLUŞTU.","control.php?islem=katyon");
+  
+    }
+  }
+  ////////////////---------------GARSON YÖNETİM BİTİŞŞŞŞŞŞŞ---------///////////////
 function sifredegis($vt){
 
   echo ' <div class="col-md-3 text-center mx-auto mt-5 table-bordered">';

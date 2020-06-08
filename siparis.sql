@@ -38,6 +38,20 @@ CREATE TABLE `doluluk` (
 INSERT INTO `doluluk` (`id`, `bos`, `dolu`) VALUES
 (1,	14,	3);
 
+DROP TABLE IF EXISTS `garson`;
+CREATE TABLE `garson` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ad` varchar(200) COLLATE utf8_turkish_ci NOT NULL,
+  `sifre` int(11) NOT NULL,
+  `durum` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+INSERT INTO `garson` (`id`, `ad`, `sifre`, `durum`) VALUES
+(1,	'serdar',	10,	1),
+(2,	'ahmet',	20,	0),
+(3,	'veli',	30,	0);
+
 DROP TABLE IF EXISTS `gecicimasa`;
 CREATE TABLE `gecicimasa` (
   `id` int(11) NOT NULL,
@@ -87,7 +101,7 @@ INSERT INTO `kategori` (`id`, `ad`) VALUES
 (3,	'Tatlılar'),
 (4,	'Pizzalar'),
 (6,	'Nargile'),
-(7,	'Balık');
+(7,	'Balıkk');
 
 DROP TABLE IF EXISTS `masalar`;
 CREATE TABLE `masalar` (
@@ -176,6 +190,6 @@ CREATE TABLE `yonetim` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 INSERT INTO `yonetim` (`id`, `kulad`, `sifre`) VALUES
-(1,	'serdar',	'0af2e8b1e4a91c959f3f8ed885a39f1c');
+(1,	'serdar',	'96de4eceb9a0c2b9b52c0b618819821b');
 
--- 2020-06-07 10:46:41
+-- 2020-06-07 15:58:08

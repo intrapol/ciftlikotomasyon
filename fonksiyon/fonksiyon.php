@@ -24,6 +24,8 @@ class sistem {
 			@$gelen=$this->benimsorum($db,"SELECT * FROM  garson where durum=1",1)->fetch_assoc();
 			if(@$gelen["ad"]!=""){
 				echo @$gelen["ad"];
+echo '<a href="islemler.php?islem=garsoncikis"><kbd class="bg-danger m-3">ÇIKIŞ</kbd></a>';
+ 
 
 			}else{
 				echo "NULL";

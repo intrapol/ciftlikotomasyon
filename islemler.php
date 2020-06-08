@@ -221,8 +221,8 @@ break;
 				}
 		break;
 	case "garsoncikis":
-		benimsorum2($db,"UPDATE garson set durum=0 where durum=1",1);
-		header('Location: ./index.php');
+		benimsorum2($db,"UPDATE garson set durum=0",1);
+		header("Location:index.php");
 	break;
 case "urun" :
   $katid=htmlspecialchars($_GET["katid"]);

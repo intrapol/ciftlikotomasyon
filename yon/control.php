@@ -88,6 +88,12 @@ $yonclass->cookcon($vt,2);
         </div>
         <div class="row">
           <div class="col-md-12 bg-light p-2 pl-3 border-bottom text-white">
+            <a href="control.php?islem=garsonyon" id="lk">Garson Yönetimi</a>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 bg-light p-2 pl-3 border-bottom text-white">
             <a href="control.php?islem=raporyon" id="lk">Rapor Yönetimi</a>
 
           </div>
@@ -163,6 +169,7 @@ $yonclass->cookcon($vt,2);
                   case 'masaekle':
                   $yonclass->masaekle($vt);
                   break;
+                  //--------------------------------------------
                   case 'urunyon':
                   $yonclass->urunyon($vt,0);
                   break;
@@ -181,6 +188,7 @@ $yonclass->cookcon($vt,2);
                   case 'urunekle':
                   $yonclass->urunekle($vt);
                   break;
+                  //-----------------------------**katagori gölümü
                    case 'katyon':
                   $yonclass->katyon($vt);
                   break;
@@ -193,9 +201,24 @@ $yonclass->cookcon($vt,2);
                   case 'katsil':
                   $yonclass->katsil($vt);
                   break;
+                  ////////////////////////////////////////----------------**garson gölümü
+                  case 'garsonyon':
+                    $yonclass->garsonyon($vt);
+                    break;
+                    case 'garsonekle':
+                    $yonclass->garsonekle($vt);
+                    break;
+                    case 'garsonguncel':
+                    $yonclass->garsonguncel($vt);
+                    break;
+                    case 'garsonsil':
+                    $yonclass->garsonsil($vt);
+                    break;
+                  ////////////-------------------------------------------**şifre değiştirme
                   case 'sifredegis':
                   $yonclass->sifredegis($vt);
                   break;
+                  //-----------------------------------------------------**rapor yönetim 
                   case 'raporyon':
                   $yonclass->rapor($vt);
                   break;
