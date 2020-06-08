@@ -9,6 +9,7 @@ $yonclass->cookcon($vt,2);
   <head>
     <meta http-equiv="Content-Type" content="text/html;" charset="utf-8" />
     <script src="../dosya/jqu.js"></script>
+    <script src="../dosya/boostmodal.js"></script>
     <link rel="stylesheet" href="../dosya/boost.css">
     <meta charset="utf-8">
     <title></title>
@@ -54,6 +55,24 @@ $yonclass->cookcon($vt,2);
   popupWindow=window.open(url,winName,settings)
 
  }
+ // silme işlemlerinde modal box ile yapılan işlemlerin eminmisin sorusu sorulması kısmı yapım aşamasında 
+ /*
+ $(document).ready(function(){
+$('a[data-confirm]').click(function(ev){
+  var href=$(this).attr('href');
+  if(!$('#dataConfirmModal').length){
+    $('body').append('<div class="modal fade" id="dataConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLongTitle">ONAY</h5></div><div class="modal-body"></div>   <div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">VAZGEÇ</button><a class="btn btn-primary" id="dataConfirmOK">SİL</a></div></div></div></div></div>')
+
+    $('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+    $('dataConfirmOk').attr('href',href);
+    $('#dataConfimModal').modal({show:true});
+    return false;
+
+  }
+
+})
+
+ })*/
 </script>
 
 
