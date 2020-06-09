@@ -831,7 +831,7 @@ function rapor($vt){
                       <tr class="table-success">
                       <td colspan="2">TOPLAM</td>
                       <td colspan="1">'.$toplamadet.'</td>
-                      <td colspan="1">'.$toplamhasilat.'</td>
+                      <td colspan="1">'.number_format($toplamhasilat, 2, ',', '.').'</td>
                       </tr>';
 ///////////////////////////////////////////////////////////////////////////////////////////////////ÜRÜN RAPOR KISMI
 
@@ -906,7 +906,7 @@ function rapor($vt){
                       <tr class="table-success">
                       <td colspan="2">TOPLAM</td>
                       <td colspan="1">'.$toplamadet.'</td>
-                      <td colspan="1">'.$toplamhasilat.'</td>
+                      <td colspan="1">'.number_format($toplamhasilat, 2, ',', '.').'</td>
                       </tr>';
 
 

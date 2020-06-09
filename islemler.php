@@ -70,11 +70,12 @@ $b=$son["urunid"];
 $c=$son["urunad"];
 $d=$son["urunfiyat"];
 $e=$son["adet"];
+$garsonid=$son["garsonid"];
 $bugun = date("Y-m-d");
 
 
-	$raporekle="INSERT INTO `rapor` (`masaid`, `urunid`, `urunad`, `urunfiyat`, `adet`, `tarih`)
-VALUES ('$a', '$b', '$c', '$d', '$e', '$bugun')";
+	$raporekle="INSERT INTO `rapor` (`masaid`,`garsonid`, `urunid`, `urunad`, `urunfiyat`, `adet`, `tarih`)
+VALUES ('$a','$garsonid', '$b', '$c', '$d', '$e', '$bugun')";
 	$raporekle=$db->prepare($raporekle);
 	$raporekle->execute();
 }
@@ -186,7 +187,11 @@ else:
  $son=$d->fetch_assoc();
  $urunad=$son["ad"];
  $urunfiyat=$son["fiyat"];
-$ekle="insert into anliksiparis (masaid,urunid,urunad,urunfiyat,adet) VALUES ($masaid,$urunid,'$urunad','$urunfiyat',$adet)";
+ $gelengarsonid=benimsorum2($db,"SELECT * FROM  garson where durum=1",1)->fetch_assoc();
+$garsonid=$gelengarsonid["id"];
+
+
+$ekle="insert into anliksiparis (masaid,garsonid,urunid,urunad,urunfiyat,adet) VALUES ($masaid,$garsonid,$urunid,'$urunad','$urunfiyat',$adet)";
 $ekleson=$db->prepare($ekle);
 $ekleson->execute();
 uyari("Eklendi","success");
