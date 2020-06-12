@@ -21,13 +21,7 @@ CREATE TABLE `anliksiparis` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 INSERT INTO `anliksiparis` (`id`, `masaid`, `garsonid`, `urunid`, `urunad`, `urunfiyat`, `adet`) VALUES
-(180,	1,	0,	5,	'Künefe',	8,	13),
-(173,	5,	0,	1,	'Kolay',	5,	3),
-(179,	1,	0,	4,	'Kahve',	7,	13),
-(178,	1,	0,	3,	'Hamburger',	10,	13),
-(177,	1,	0,	2,	'Çay',	2,	5),
-(185,	1417,	0,	1,	'Kolay',	5,	3),
-(201,	3,	0,	12,	'Limonata',	2,	2);
+(185,	1417,	0,	1,	'Kolay',	5,	3);
 
 DROP TABLE IF EXISTS `doluluk`;
 CREATE TABLE `doluluk` (
@@ -37,7 +31,7 @@ CREATE TABLE `doluluk` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 INSERT INTO `doluluk` (`id`, `bos`, `dolu`) VALUES
-(1,	14,	3);
+(1,	17,	0);
 
 DROP TABLE IF EXISTS `garson`;
 CREATE TABLE `garson` (
@@ -49,10 +43,21 @@ CREATE TABLE `garson` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 INSERT INTO `garson` (`id`, `ad`, `sifre`, `durum`) VALUES
-(1,	'serdar',	11,	1),
-(2,	'ahmet',	20,	0),
-(3,	'veli',	30,	0),
-(6,	'anagarson',	123,	0);
+(1,	'serdar',	11,	0),
+(2,	'ahmet',	123,	0),
+(3,	'veli',	123,	0),
+(6,	'anagarson',	123,	1);
+
+DROP TABLE IF EXISTS `gecicigarson`;
+CREATE TABLE `gecicigarson` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `garsonid` int(11) NOT NULL,
+  `garsonad` varchar(200) COLLATE utf8_turkish_ci NOT NULL,
+  `adet` int(11) NOT NULL,
+  `hasilat` float NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
 
 DROP TABLE IF EXISTS `gecicimasa`;
 CREATE TABLE `gecicimasa` (
@@ -64,11 +69,13 @@ CREATE TABLE `gecicimasa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 INSERT INTO `gecicimasa` (`id`, `masaid`, `masaad`, `hasilat`, `adet`) VALUES
-(0,	8,	'MS-8',	31,	6),
-(0,	3,	'MS-4',	71,	9),
-(0,	2,	'MS-2',	52,	8),
+(0,	8,	'MS-8',	310,	11),
+(0,	3,	'MS-4',	75,	11),
+(0,	2,	'MS-2',	447,	17),
 (0,	10,	'MS-10',	97,	13),
-(0,	9,	'MS-9',	1300260,	18);
+(0,	9,	'MS-9',	1300310,	23),
+(0,	1,	'MS-1',	335,	44),
+(0,	5,	'MS-5',	15,	3);
 
 DROP TABLE IF EXISTS `geciciurun`;
 CREATE TABLE `geciciurun` (
@@ -81,14 +88,17 @@ CREATE TABLE `geciciurun` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 INSERT INTO `geciciurun` (`id`, `urunid`, `urunad`, `hasilat`, `adet`) VALUES
-(1,	2,	'Çay',	4,	2),
-(2,	4,	'Kahve',	28,	4),
-(3,	3,	'Hamburger',	90,	9),
-(4,	5,	'Künefe',	64,	8),
-(5,	1,	'Kolay',	65,	13),
-(6,	13,	'zor ',	1300000,	13),
-(7,	11,	'kebabi',	6,	3),
-(8,	7,	'sigara',	246,	2);
+(1,	2,	'Çay',	14,	7),
+(2,	4,	'Kahve',	119,	17),
+(3,	3,	'Hamburger',	297,	29),
+(4,	5,	'Künefe',	168,	21),
+(5,	1,	'Kolay',	80,	16),
+(6,	13,	'zor ',	1300100,	14),
+(7,	11,	'kebabi',	16,	8),
+(8,	7,	'sigara',	492,	4),
+(9,	8,	'elma',	246,	2),
+(10,	12,	'Limonata',	4,	2),
+(11,	6,	'lahmacun',	44,	2);
 
 DROP TABLE IF EXISTS `kategori`;
 CREATE TABLE `kategori` (
@@ -160,7 +170,20 @@ INSERT INTO `rapor` (`id`, `masaid`, `garsonid`, `urunid`, `urunad`, `urunfiyat`
 (21,	9,	0,	13,	'zor ',	100000,	13,	'2020-06-06'),
 (22,	9,	0,	11,	'kebabi',	2,	3,	'2020-06-06'),
 (23,	9,	0,	7,	'sigara',	123,	2,	'2020-06-06'),
-(24,	2,	1,	8,	'elma',	123,	2,	'2020-06-09');
+(24,	2,	1,	8,	'elma',	123,	2,	'2020-06-09'),
+(25,	2,	2,	13,	'zor ',	101,	1,	'2020-06-10'),
+(26,	2,	2,	11,	'kebabi',	2,	2,	'2020-06-10'),
+(27,	2,	2,	3,	'Hamburger',	11,	4,	'2020-06-10'),
+(28,	3,	0,	12,	'Limonata',	2,	2,	'2020-06-10'),
+(29,	1,	0,	5,	'Künefe',	8,	13,	'2020-06-10'),
+(30,	1,	0,	4,	'Kahve',	7,	13,	'2020-06-10'),
+(31,	1,	0,	3,	'Hamburger',	10,	13,	'2020-06-10'),
+(32,	1,	0,	2,	'Çay',	2,	5,	'2020-06-10'),
+(33,	8,	3,	3,	'Hamburger',	11,	3,	'2020-06-10'),
+(34,	8,	3,	7,	'sigara',	123,	2,	'2020-06-10'),
+(35,	5,	0,	1,	'Kolay',	5,	3,	'2020-06-10'),
+(36,	9,	6,	6,	'lahmacun',	22,	2,	'2020-06-10'),
+(37,	9,	6,	11,	'kebabi',	2,	3,	'2020-06-10');
 
 DROP TABLE IF EXISTS `urunler`;
 CREATE TABLE `urunler` (
@@ -196,4 +219,4 @@ CREATE TABLE `yonetim` (
 INSERT INTO `yonetim` (`id`, `kulad`, `sifre`) VALUES
 (1,	'serdar',	'96de4eceb9a0c2b9b52c0b618819821b');
 
--- 2020-06-09 14:07:14
+-- 2020-06-12 06:55:47

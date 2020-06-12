@@ -113,6 +113,12 @@ $('a[data-confirm]').click(function(ev){
         </div>
         <div class="row">
           <div class="col-md-12 bg-light p-2 pl-3 border-bottom text-white">
+            <a href="control.php?islem=garsonper" id="lk">Garson Performans Yönetimi: <a class="text-danger">YAPIM AŞAMASINDA</a></a>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 bg-light p-2 pl-3 border-bottom text-white">
             <a href="control.php?islem=raporyon" id="lk">Rapor Yönetimi</a>
 
           </div>
@@ -233,6 +239,9 @@ $('a[data-confirm]').click(function(ev){
                     case 'garsonsil':
                     $yonclass->garsonsil($vt);
                     break;
+                    case 'garsonper':
+                      $yonclass->garsonper($vt);
+                      break;
                   ////////////-------------------------------------------**şifre değiştirme
                   case 'sifredegis':
                   $yonclass->sifredegis($vt);

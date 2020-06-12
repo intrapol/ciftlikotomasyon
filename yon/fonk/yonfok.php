@@ -920,6 +920,140 @@ function rapor($vt){
             </tbody>
   </table>';
 }
+function garsonper($vt){
+
+
+
+  @$tercih=$_GET["tar"];
+  switch ($tercih) {
+    case 'ay':
+      $veri=$this->genelsorgu($vt,"Truncate gecicigarson");
+      
+             $veri=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)");
+             $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)");
+      
+      break;
+      
+    case 'tarih':
+      $veri=$this->genelsorgu($vt,"Truncate gecicigarson");
+      
+      $tarih1=$_POST["tarih1"];
+      $tarih2=$_POST["tarih2"];
+      echo ' <div class="alert alert-info text-center mx-auto mt-4">'.$tarih1.'-'.$tarih2.'</div>';
+
+
+             $veri=$this->genelsorgu($vt,"SELECT * FROM rapor where DATE(tarih) BETWEEN '$tarih1' AND '$tarih2'");
+             $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor where DATE(tarih) BETWEEN '$tarih1' AND '$tarih2'");
+
+      
+      break;
+    
+    default:
+    $veri=$this->genelsorgu($vt,"Truncate gecicimasa");$veri=$this->genelsorgu($vt,"Truncate geciciurun");
+             $veri=$this->genelsorgu($vt,"SELECT * FROM rapor");
+             $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor");
+
+         
+      break;
+  }
+
+
+
+
+echo '  <table class="table text-center table-light table-bordered mt-2 mx-auto col-md-8">
+          <thead>
+            <tr class="">
+            <th><a href="control.php?islem=garsonper&tar=ay">Bu Ay</a></th>        
+              <th colspan="4"><form action="control.php?islem=raporyon&tar=tarih" method="post">
+              <input type="date" name="tarih1" class="form-control col-md-12">
+              <input type="date" name="tarih2" class="form-control col-md-12">
+
+              </th>
+              <th>';
+              
+              if(@$tarih1!="" || @$tarih2!=""){
+                echo '<p><a href="cikti.php?islem=ciktial&tar1='.$tarih1.'&tar2='.$tarih2.'" onclick="ortasayfa(this.href,\'mywindow\',\'900\',\'800\',\'yes\');return false">Çıktı Al</a></p>';
+              }
+              
+              echo '<input name="buton" type="submit" class="btn btn-success" value="GETİR"></form></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th colspan="4">
+                <table class="text-center table table-bordered col-md-12 table-striped">
+                <thead>
+                  <tr>
+                    <th colspan="4" class="table-dark">Garson Performans</th>
+                  </tr>
+                </thead>
+                <thead>
+                  <tr class="table-danger">
+                    <th colspan="2">Garson Ad</th>
+                    <th colspan="2">Adet</th>
+                   
+                  </tr>
+                </thead><tbody>';
+              $kilit=$this->genelsorgu($vt,"SELECT * FROM garson");
+              if ($kilit->num_rows==0) {
+
+                while ($gel=$veri->fetch_assoc()) {
+                  $garsonid=$gel["garsonid"];
+                  $masaveri=$this->genelsorgu($vt,"SELECT * FROM garson WHERE id=$garsonid")->fetch_assoc();
+                  $garsonad=$masaveri["ad"];
+                  $raporbak=$this->genelsorgu($vt," SELECT * FROM gecicigarson WHERE garsonid=$garsonid");
+
+                  if ($raporbak->num_rows==0) {
+                   
+                    $adet=$gel["adet"];
+
+                  $this->genelsorgu($vt,"INSERT INTO gecicigarson (garsonid,garsonad,adet)  VALUES($garsonid,'$garsonad',$adet)");
+                  }else{
+                    $raporson=$raporbak->fetch_assoc();
+                    $gelenadet=$raporson["adet"];
+                                
+                    $sonadet=$gelenadet + $gel["adet"];
+                    $this->genelsorgu($vt,"update gecicigarson set adet=$sonadet where garsonid=$garsonid");
+
+
+                  }
+
+
+
+                }
+
+              }
+              $son=$this->genelsorgu($vt,"SELECT * from gecicigarson order by adet desc;"); 
+              $toplamadet=0;
+              
+
+              while ($listele=$son->fetch_assoc()) {
+                echo '
+                    <tr>
+                    <td colspan="2">'.$listele["garsonad"].'</td>
+                    <td colspan="2">'.$listele["adet"].'</td>
+                    </tr>';
+                    $toplamadet+= $listele["adet"];
+                    
+              }
+
+              echo '
+                    <tr class="table-success">
+                    <td colspan="2">TOPLAM</td>
+                    <td colspan="2">'.$toplamadet.'</td>
+                   
+                    </tr>';
+///////////////////////////////////////////////////////////////////////////////////////////////////ÜRÜN RAPOR KISMI
+
+              echo '</tbody>
+              </table>
+            </th>
+                         
+            </tr>
+
+          </tbody>
+</table>';
+}
 
 function toplamUrunAdet($vt){
    $gelensonuc=$this->genelsorgu($vt,"SELECT SUM(adet) FROM anliksiparis")->fetch_assoc();
