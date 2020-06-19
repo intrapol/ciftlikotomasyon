@@ -54,7 +54,7 @@ $dizi=$son->fetch_assoc();
 <div class="col-md-7"  style="background-color:#F9F9F9">
 <div class="row">
 <form id="formum">
-<div class="col-md-12" id="sonuc"  style="min-height:600px;">
+<div class="col-md-12" id="sonuc"  style="min-height:100%;">
 <img src="dosya/işarettik.png" alt="">
 </div>
 </div>
