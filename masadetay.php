@@ -121,6 +121,9 @@ endfor;
 else:
 echo "hata var";
 endif;
+
+  
+
 ?>
 </div>
 </body>

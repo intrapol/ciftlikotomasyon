@@ -1,5 +1,6 @@
 <?php include("fonksiyon/fonksiyon.php"); $sistem = new sistem;
 $veri=$sistem->benimsorum2($db,"SELECT * from garson where durum=1",1)->num_rows;
+//header("refresh:2;");  // sayfanın otomatik yenilenmesini sağlıyrouz ..... anlık spariş sayfasında gözükecektir
 
 
 ?>
@@ -60,7 +61,7 @@ border-radius:15px;
 <div class="container-fluid">
 <div class="row table-dark" id="rows">
 <div class="col-md-2 border right">Toplam Sipariş : <a class="text-warning"><?php $sistem->siparistoplam($db);?></a></div>
-<div class="col-md-2 border right">Doluluk Oranı : <a class="text-warning"><?php $sistem->doluluk($db) ?></a></div>
+<div class="col-md-2 border right"><a class="text-success" href="">+ </a></div>
 <div class="col-md-2 border right">Toplam Masa : <a class="text-warning"><?php $sistem->masatoplam($db);?> </a></div>
 <div class="col-md-3 border right">Aktif Garson : <a class="text-warning"><?php $sistem->garsonbak($db);?></div>
 <div class="col-md-3 border right">Tarih :<a class="text-warning"> <?php echo date('d.m.Y H:i:s'); ?></a></div>
@@ -98,6 +99,8 @@ border-radius:15px;
 						 echo'<option value="'.$sonuc["id"].'">'.$sonuc["ad"].'</option>';
 						 
 					 }
+					 
+
 					 ?>
               
 				</select>

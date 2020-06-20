@@ -622,6 +622,7 @@ function sifredegis($vt){
   echo ' <div class="col-md-3 text-center mx-auto mt-5 table-bordered">';
 
   if(isset($_POST["buton"])){
+      @$kulad=htmlspecialchars($_POST["kulad"]);
       @$sifre=htmlspecialchars($_POST["sifre"]);
       @$sifre1=htmlspecialchars($_POST["sifre1"]);
       @$sifre2=htmlspecialchars($_POST["sifre2"]);
@@ -638,7 +639,7 @@ function sifredegis($vt){
           if ($sifre1==$sifre2) {
         $sifre1=md5(sha1(md5($sifre1)));
 
-            $this->genelsorgu($vt,"UPDATE yonetim SET sifre='$sifre1' WHERE sifre='$sifre'");
+            $this->genelsorgu($vt,"UPDATE yonetim SET sifre='$sifre1', kulad='$kulad' WHERE sifre='$sifre'");
           $this->uyari("success","SİFRE DEĞİŞTİRİLDİ...","control.php?islem=bos");
             
           }
@@ -650,10 +651,15 @@ function sifredegis($vt){
   }
 }
   else{
+    $kulad=$this->genelsorgu($vt,"select * from yonetim where id=1")->fetch_assoc();
   echo '
 
       <form class="" action="" method="post">
-      <div class="col-md-12 table-light"><h4>ŞİFRE DEĞİŞTİR </h4></div>
+      <div class="col-md-12 table-light"><h4>YÖNETİCİ BİLGİLERİ GÜNCELLE </h4></div>
+      <div class="col-md-12 table-light">
+        YENİ KULLANCI ADI
+          <input type="text" name="kulad" value="'.$kulad["kulad"].'" class="form-control mt-3">
+        </div>
         <div class="col-md-12 table-light">
         ESKİ ŞİFRENİZ
           <input type="text" name="sifre"  class="form-control mt-3">
@@ -1127,6 +1133,7 @@ public function cookcon($db,$durum){
 if ($sonhal!=$_COOKIE["kulad"]) {
   setcookie("kulad",$deger, time() - 10);
   header("Location:index.php");
+
 }
     else{
       if ($durum==1) {
@@ -1135,14 +1142,15 @@ if ($sonhal!=$_COOKIE["kulad"]) {
       else{
         if ($durum==2) {
           
-          //header("Location:index.php"); //çıkış işlemi  tekrardan kontrol edildiği için cookie kaybolduğu iin gerek yok
+         //header("Location:index.php"); //çıkış işlemi  tekrardan kontrol edildiği için cookie kaybolduğu iin gerek yok
             }
       }
   }
 }else{
-        
+  //header("Location:index.php"); 
 
 }
+
 
 }
 

@@ -1,16 +1,24 @@
-<!DOCTYPE html>
+<!DOCTYPE html><script src="../dosya/jqu.js"></script>
+    <script src="../dosya/boostmodal.js"></script>
+    <link rel="stylesheet" href="../dosya/boost.css">
 <?php
 include_once("fonk/yonfok.php");
 $yonclass= new yonetim;
-$yonclass->cookcon($vt,2);
+$yonclass->cookcon($vt,'2');
+if(isset($_COOKIE["kulad"])){
+
+}else{
+  header("refresh:2,url=index.php");
+  echo '<center><div class="alert alert-danger">LÜTFEN YÖNETİCİ GİRİŞ YAPINIZ</div></center>';
+  die();
+  
+}
  ?>
 
 <html lang="tr">
   <head>
     <meta http-equiv="Content-Type" content="text/html;" charset="utf-8" />
-    <script src="../dosya/jqu.js"></script>
-    <script src="../dosya/boostmodal.js"></script>
-    <link rel="stylesheet" href="../dosya/boost.css">
+    
     <meta charset="utf-8">
     <title></title>
   </head>
@@ -82,7 +90,7 @@ $('a[data-confirm]').click(function(ev){
 
   <div class="col-md-2 border-right bg-info">
         <div class="row">
-          <div class="col-md-12 bg-light p-4 mx-auto text-center font-weight-bold">
+          <div class="col-md-12 bg-info p-4 mx-auto text-center font-weight-bold text-white">
             <h3><?php echo $yonclass->kulad($vt); ?></h3>
 
           </div>
@@ -125,12 +133,12 @@ $('a[data-confirm]').click(function(ev){
         </div>
         <div class="row">
           <div class="col-md-12 bg-light p-2 pl-3 border-bottom text-white">
-            <a href="control.php?islem=sifredegis" id="lk">Şifre Değiştir</a>
+            <a href="control.php?islem=sifredegis" id="lk">Ad ve Şifre Değiştir</a>
 
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12 bg-light p-2 pl-3 border-bottom text-white">
+          <div class="col-md-12 bg-danger p-2 pl-3 border-bottom text-white">
             <a href="control.php?islem=cikis" id="lk">Çıkış</a>
 
           </div>
