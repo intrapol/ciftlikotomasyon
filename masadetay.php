@@ -40,9 +40,9 @@ $son=$masam->masagetir($db,$masaid);
 $dizi=$son->fetch_assoc();
 ?>
 <div class="row border border-dark" id="div1">
-<div class="col-md-3" id="div2">
+<div class="col-md-4" id="div2">
 <div class="row">
-<div class="col-md-12 border-bottom border-success bg-success text-white mx-auto p-4 text-center" style="font-size:36px;" id="div3">
+<div class="col-md-12 border-bottom border-success bg-info text-white mx-auto p-4 text-center" style="font-size:36px;" id="div3">
 <a href="index.php" class="btn btn-warning">ANA SAYFA</a><br>
 <?php echo $dizi["ad"]; ?></div>
 <!--- burada anlık ss -->
@@ -51,11 +51,11 @@ $dizi=$son->fetch_assoc();
 <div id="cevap"></div>
 </div>
 </div>
-<div class="col-md-7"  style="background-color:#F9F9F9">
+<div class="col-md-6"  style="background-color:#F9F9F9">
 <div class="row">
 <form id="formum">
 <div class="col-md-12" id="sonuc"  style="min-height:100%;">
-<img src="dosya/işarettik.png" alt="">
+<img src="dosya/işarettik.png" style="width:100%;height:100%;" alt="">
 </div>
 </div>
 <div class="row">
@@ -64,15 +64,15 @@ $dizi=$son->fetch_assoc();
 
 <div class="col-md-6">
 <input type="hidden" name="masaid" value="<?php echo $dizi["id"]; ?>" />
-<input type="button" id="btn" value="EKLE" class="btn btn-success btn-block mt-4" />
+<input type="button" id="btn" value="EKLE" style="height:80px; width:100%;" class="btn btn-success btn-block mt-4" />
 
 </div>
 
 
-<div class="col-md-6">
+<div class="col-md-12">
 <?php
-for ($i=1; $i<=13; $i++) :
-echo '<label class="btn btn-success m-2"><input name="adet" type="radio" value="'.$i.'" />'.$i.'</label>';
+for ($i=1; $i<=24; $i++) :
+echo '<label class="btn btn-info m-2"><input name="adet" type="radio" value="'.$i.'" />'.$i.'</label>';
 endfor;
 ?>
 
@@ -111,7 +111,7 @@ endfor;
 </div>
 <!-- kat en sağ -->
 
-<div class="col-md-2  border-left" id="urunler">
+<div class="col-md-2  border-left" id="urunler" style="height: 600px;overflow-y: auto;overflow-x: hidden;">
 <?php $masam->urungrup($db); ?>
 
 </div>

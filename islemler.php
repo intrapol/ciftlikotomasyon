@@ -10,6 +10,9 @@
 <title>TEST</title>
 <script>
 $(document).ready(function() {
+	$('#degistirform').hide();
+	$('#birlestirform').hide();
+
 	$('#btnn').click(function() {
 		$.ajax ({
 			type : "POST",
@@ -28,6 +31,38 @@ $('#yakala a').click(function() {
 	window.location.reload();
 	})
 })
+$('#degistir a').click(function(){
+	$('#birlestirform').slideUp();
+	$('#degistirform').slideDown();
+
+});
+$('#birlestir a').click(function(){
+	$('#degistirform').slideUp();
+	$('#birlestirform').slideDown();
+
+});
+$('#degistirbtn').click(function() {
+		$.ajax ({
+			type : "POST",
+			url :'islemler.php?islem=masaislem',
+			data : $('#degistirformveri').serialize(),
+			success: function(donen_veri)	{
+				$('#degistirformveri').trigger("reset");
+				window.location.reload();
+			},
+		})
+	})
+	$('#birlestirbtn').click(function() {
+		$.ajax ({
+			type : "POST",
+			url :'islemler.php?islem=masaislem',
+			data : $('#birlestirformveri').serialize(),
+			success: function(donen_veri)	{
+				$('#birlestirformveri').trigger("reset");
+				window.location.reload();
+			},
+		})
+	})
 
 });
 function ortasayfa(url,winName,w,h,scroll){
@@ -54,8 +89,67 @@ function benimsorum2($vt,$sorgu,$tercih) {
 		echo '<div class="alert alert-'.$renk.' mt-4 text-center">'.$mesaj.'</div>';
 
 	}
+	
+function degistirgetir($masaid,$db){
+	echo '<div class="card border-success m-3" style="max-width:10rem;"><div class="card-header">Masa Değiştir</div><div class="card-body text-success">
+	<form id="degistirformveri">
+
+
+	<input type="hidden" name="mevcutmasaid" value="'.$masaid.'" />
+	<select name="hedefmasa" class="form-control">';
+	$d=benimsorum2($db,"SELECT * from masalar where durum = '0' ",1);
+	while($son= $d->fetch_assoc()){
+			echo '<option value="'.$son["id"].'">'.$son["ad"].'</option>';
+	}
+
+	echo '</select><input type="button" id="degistirbtn" value="DEĞİŞTİR" class="btn btn-success btn-block mt-4" />
+
+
+
+
+	</form>
+	</div>
+	</div>
+	';
+}
+function birlestirgetir($masaid,$db){
+	echo '<div class="card border-success m-3" style="max-width:10rem;"><div class="card-header">Masa Birleştir</div><div class="card-body text-success">
+	<form id="degistirformveri">
+
+
+	<input type="hidden" name="mevcutmasaid" value="'.$masaid.'" />
+	<select name="hedefmasa" class="form-control">';
+	$d=benimsorum2($db,"SELECT * from masalar where durum = '1' ",1);
+	while($son= $d->fetch_assoc()){
+		if($masaid!=$son["id"]){
+			echo '<option value="'.$son["id"].'">'.$son["ad"].'</option>';
+		}
+	}
+
+	echo '</select><input type="button" id="birlestirbtn" value="BİRLEŞTİR" class="btn btn-success btn-block mt-4" />
+
+
+
+
+	</form>
+	</div>
+	</div>
+	';
+}
 @$islem=$_GET["islem"];
 switch ($islem) :
+	case "masaislem":
+		$mevcutmasaid=$_POST["mevcutmasaid"];
+		$hedefmasa=$_POST["hedefmasa"];
+
+		benimsorum2($db,"UPDATE anliksiparis set masaid=$hedefmasa where masaid=$mevcutmasaid",1);
+		$masadurum="UPDATE `masalar` SET durum='0' WHERE id = $mevcutmasaid ";
+		$masadurumson=$db->prepare($masadurum);
+		$masadurumson->execute();
+		$masadurum="UPDATE `masalar` SET durum='1' WHERE id = $hedefmasa ";
+		$masadurumson=$db->prepare($masadurum);
+		$masadurumson->execute();
+	break;
 case "hesap":
 if (!$_POST):
 echo "posttan gelmiyorsun";
@@ -89,7 +183,9 @@ $sorgu="DELETE FROM anliksiparis
 WHERE masaid=$hesapalid";
 $silme=$db->prepare($sorgu);
 $silme->execute();
-
+$masadurum="UPDATE `masalar` SET durum='0'WHERE id = $masaid ";
+$masadurumson=$db->prepare($masadurum);
+$masadurumson->execute();
 endif;
 
 break;
@@ -98,8 +194,10 @@ case "sil":
 if (!$_POST):
 echo "post ile  gelmiyorsun";
 else:
+	
 $gelenid=htmlspecialchars($_POST["urunid"]);
-$sorgu="DELETE FROM anliksiparis WHERE urunid=$gelenid";
+$MASAİD=$_POST["masaid"];
+$sorgu="DELETE FROM anliksiparis WHERE urunid=$gelenid AND masaid=$MASAİD";
 $silme=$db->prepare($sorgu);
 $silme->execute();
 endif;
@@ -109,15 +207,19 @@ $id=htmlspecialchars($_GET["id"]);
 		$a="SELECT * FROM anliksiparis WHERE masaid=$id";
 	$d=benimsorum2($db,$a,1);
 	if ($d->num_rows==0) :
+		$masadurum="UPDATE `masalar` SET durum='0'WHERE id = $id ";
+		$masadurumson=$db->prepare($masadurum);
+		$masadurumson->execute();
 	uyari("Henüz Sparis yok","danger");
+	
 	else:
 	echo '<table class="table">
 	<thead>
 	<tr>
-	<th scope="col" class="text-warning bg-dark">Ürün Adı</th>
-	<th scope="col"  class="text-warning bg-dark">Adet</th>
-	<th scope="col"  class="text-warning bg-dark">Tutar</th>
-	<th scope="col"  class="text-warning bg-dark">İşlem</th>
+	<th scope="col" id="hop1" class="text-warning bg-dark">Ürün Adı</th>
+	<th scope="col" id="hop2" class="text-warning bg-dark">Adet</th>
+	<th scope="col" id="hop3" class="text-warning bg-dark">Tutar</th>
+	<th scope="col" id="hop4" class="text-warning bg-dark">İşlem</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -146,6 +248,26 @@ $id=htmlspecialchars($_GET["id"]);
 		</tbody></table>
 		<div class="row">
 		<div class="col-md-12">
+		<div class="row">
+		<div class="col-md-6" id="degistir">	
+		<a class="btn btn-warning btn-block mt-1" style="height:40px;">Masa Değiştir</a>
+		</div>
+
+		<div class="col-md-6" id="birlestir">	
+		<a class="btn btn-warning btn-block mt-1" style="height:40px;">Masa Birleştir</a>
+		
+		</div>
+
+		</div>
+		<div class="row">
+		
+		<div class="col-md-12" id="degistirform">'; degistirgetir($masaid,$db);	echo'</div>
+		<div class="col-md-12" id="birlestirform">'; birlestirgetir($masaid,$db); echo'</div>
+
+
+		</div>
+			</div>
+		<div class="col-md-12">
 	 <form id="hesapform">
 
 
@@ -165,36 +287,39 @@ $id=htmlspecialchars($_GET["id"]);
 break;
 case "ekle":
 if ($_POST) :
-@$masaid=htmlspecialchars($_POST["masaid"]);
-@$urunid=htmlspecialchars($_POST["urunid"]);
-@$adet=htmlspecialchars($_POST["adet"]);
-if ($masaid==""  || $urunid==""  || $adet=="" ) :
-uyari("Boş alan bırakma","danger");
-else:
-$varmi="select * from anliksiparis where urunid=$urunid and masaid=$masaid";
-$var=benimsorum2($db,$varmi,1);
-if ($var->num_rows!=0) :
-$urundizi=$var->fetch_assoc();
-$sonadet= $adet + $urundizi["adet"];
-$islemid=$urundizi["id"];
-$guncel="UPDATE anliksiparis set adet=$sonadet where id=$islemid";
-$guncelson=$db->prepare($guncel);
-$guncelson->execute();
-uyari("Adet Güncellendi","success");
-else:
- $a="select * from urunler where id=$urunid";
- $d=benimsorum2($db,$a,1);
- $son=$d->fetch_assoc();
- $urunad=$son["ad"];
- $urunfiyat=$son["fiyat"];
- $gelengarsonid=benimsorum2($db,"SELECT * FROM  garson where durum=1",1)->fetch_assoc();
-$garsonid=$gelengarsonid["id"];
-
+	@$masaid=htmlspecialchars($_POST["masaid"]);
+	@$urunid=htmlspecialchars($_POST["urunid"]);
+	@$adet=htmlspecialchars($_POST["adet"]);
+		if ($masaid==""  || $urunid==""  || $adet=="" ) :
+		uyari("Boş alan bırakma","danger");
+		else:
+		$varmi="select * from anliksiparis where urunid=$urunid and masaid=$masaid";
+		$var=benimsorum2($db,$varmi,1);
+			if ($var->num_rows!=0) :
+			$urundizi=$var->fetch_assoc();
+			$sonadet= $adet + $urundizi["adet"];
+			$islemid=$urundizi["id"];
+			$guncel="UPDATE anliksiparis set adet=$sonadet where id=$islemid";
+			$guncelson=$db->prepare($guncel);
+			$guncelson->execute();
+			uyari("Adet Güncellendi","success");
+				else:
+				$a="select * from urunler where id=$urunid";
+				$d=benimsorum2($db,$a,1);
+				$son=$d->fetch_assoc();
+				$urunad=$son["ad"];
+				$urunfiyat=$son["fiyat"];
+				$gelengarsonid=benimsorum2($db,"SELECT * FROM  garson where durum=1",1)->fetch_assoc();
+				$garsonid=$gelengarsonid["id"];
+$masadurum="UPDATE `masalar` SET durum='1'WHERE id = $masaid ";
+$masadurumson=$db->prepare($masadurum);
+$masadurumson->execute();
 
 $ekle="insert into anliksiparis (masaid,garsonid,urunid,urunad,urunfiyat,adet) VALUES ($masaid,$garsonid,$urunid,'$urunad','$urunfiyat',$adet)";
 $ekleson=$db->prepare($ekle);
 $ekleson->execute();
 uyari("Eklendi","success");
+
 
 endif;
 endif;
