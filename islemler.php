@@ -114,7 +114,7 @@ function degistirgetir($masaid,$db){
 }
 function birlestirgetir($masaid,$db){
 	echo '<div class="card border-success m-3" style="max-width:10rem;"><div class="card-header">Masa Birleştir</div><div class="card-body text-success">
-	<form id="degistirformveri">
+	<form id="birlestirformveri">
 
 
 	<input type="hidden" name="mevcutmasaid" value="'.$masaid.'" />
@@ -196,8 +196,7 @@ echo "post ile  gelmiyorsun";
 else:
 	
 $gelenid=htmlspecialchars($_POST["urunid"]);
-$MASAİD=$_POST["masaid"];
-$sorgu="DELETE FROM anliksiparis WHERE urunid=$gelenid AND masaid=$MASAİD";
+$sorgu="DELETE FROM anliksiparis WHERE urunid=$gelenid ";
 $silme=$db->prepare($sorgu);
 $silme->execute();
 endif;
