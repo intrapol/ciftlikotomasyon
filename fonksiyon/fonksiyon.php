@@ -37,6 +37,7 @@ echo '<a href="islemler.php?islem=garsoncikis"><kbd class="bg-danger m-3">Ã‡IKIÅ
 		$bos=0;
 		$dolu=0;
 	while ($masason=$sonuc->fetch_assoc()) {
+		if($masason["id"]==0){}else{
 	/// her sorguda maasaanlik siparis gider ve bu id varmÄ± diye bakar
 	$siparisler = 'select * from anliksiparis where masaid='.$masason["id"].'';
 
@@ -47,7 +48,7 @@ echo '<a href="islemler.php?islem=garsoncikis"><kbd class="bg-danger m-3">Ã‡IKIÅ
 	echo '<div id="mas" class="col-md-2 col-sm-6 mr-2 mx-auto p-2 text-center text-white">
 	<a href="masadetay.php?masaid='.$masason["id"].'">
 	<div class="bg-'.$renk.'" id="masa">'.$masason["ad"].'</div></div></a>';
-}
+}}
 		$dol="UPDATE doluluk set bos=$bos, dolu=$dolu WHERE id=1";
 		$dolson=$dv->prepare($dol);
 		$dolson->execute();

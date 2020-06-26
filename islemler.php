@@ -24,18 +24,22 @@ $(document).ready(function() {
 			},
 		})
 	})
-$('#yakala a').click(function() {
+	// MASALARIN İÇİNDEKİ SPARİŞLERDE HATA OLDUĞUNDA SPARİŞİ SİL YAPTIĞIMIZDA BÜTÜN SİSTEMDEKİ AYNI İD YE SAHİP 
+	//SPARİŞLERİ SİLİYORDU MASA İD SİNİ A TAGLARINDAN BECEREMEDİK FORMDAN FARKLI SAYFAYA ACTİON YAPILDI .....//
+/*$('#yakala a').click(function() {
 	var sectionId =$(this).attr('sectionId');
 	$.post("islemler.php?islem=sil",{"urunid":sectionId},function(post_veri){
 	$(".sonuc2").html(post_veri);
 	window.location.reload();
 	})
-})
+})*/
+// değiştir function 
 $('#degistir a').click(function(){
 	$('#birlestirform').slideUp();
 	$('#degistirform').slideDown();
 
 });
+//birleştir function 
 $('#birlestir a').click(function(){
 	$('#degistirform').slideUp();
 	$('#birlestirform').slideDown();
@@ -189,18 +193,6 @@ $masadurumson->execute();
 endif;
 
 break;
-
-case "sil":
-if (!$_POST):
-echo "post ile  gelmiyorsun";
-else:
-	
-$gelenid=htmlspecialchars($_POST["urunid"]);
-$sorgu="DELETE FROM anliksiparis WHERE urunid=$gelenid ";
-$silme=$db->prepare($sorgu);
-$silme->execute();
-endif;
-break;
 case "goster":
 $id=htmlspecialchars($_GET["id"]);
 		$a="SELECT * FROM anliksiparis WHERE masaid=$id";
@@ -236,7 +228,16 @@ $id=htmlspecialchars($_GET["id"]);
 									<td>'.$gelenson["urunad"].'</td>
 									<td>'.$gelenson["adet"].'</td>
 									<td>'.number_format($tutar,2,'.',',').'</td>
-									<td id="yakala"><a class="btn btn-danger mt-2 text-white" sectionId="'.$gelenson["urunid"].'">SİL</a></td>
+									<td id="yakala">
+									<form action="urunsil.php" method="post">
+									<input type="hidden" name="urunid" value="'.$gelenson["urunid"].'">
+									<input type="hidden" name="masaid" value="'.$id.'">
+									<input type="hidden" name="adet" value="'.$gelenson["adet"].'">
+									<input class="btn btn-danger "type="submit" value="SİL">
+									
+
+									</form>
+									</td>
 									</tr>';
 			endwhile;
 	echo '<tr class="bg-dark text-center text-warning">
@@ -301,6 +302,22 @@ if ($_POST) :
 			$guncel="UPDATE anliksiparis set adet=$sonadet where id=$islemid";
 			$guncelson=$db->prepare($guncel);
 			$guncelson->execute();
+			// urun adı çekme işlemi
+			$a="select * from urunler where id=$urunid";
+				$d=benimsorum2($db,$a,1);
+				$son=$d->fetch_assoc();
+				$urunad=$son["ad"];
+			// urun adı çekme işlemi
+
+			//mutfak eklemesi...
+					$saat=date("H");
+					$dakika=date("i");
+					$mutfakekle="INSERT INTO `mutfak` (`masaid`, `urunid`, `urunad`, `adet`, `saat`, `dakika`,`durum`)
+					VALUES ($masaid,$urunid,'$urunad',$adet,$saat,$dakika,'1')";
+					$mutfakekleson=$db->prepare($mutfakekle);
+					$mutfakekleson->execute();
+			//mutfak eklemesi...
+
 			uyari("Adet Güncellendi","success");
 				else:
 				$a="select * from urunler where id=$urunid";
@@ -317,6 +334,13 @@ $masadurumson->execute();
 $ekle="insert into anliksiparis (masaid,garsonid,urunid,urunad,urunfiyat,adet) VALUES ($masaid,$garsonid,$urunid,'$urunad','$urunfiyat',$adet)";
 $ekleson=$db->prepare($ekle);
 $ekleson->execute();
+//mutfak eklemesi...
+$saat=date("H");
+$dakika=date("i");
+$mutfakekle="INSERT INTO `mutfak` (`masaid`, `urunid`, `urunad`, `adet`, `saat`, `dakika`, `durum`)
+VALUES ($masaid,$urunid,'$urunad',$adet,$saat,$dakika,'1')";
+$mutfakekleson=$db->prepare($mutfakekle);
+$mutfakekleson->execute();
 uyari("Eklendi","success");
 
 
