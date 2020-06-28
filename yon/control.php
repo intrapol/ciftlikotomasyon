@@ -133,6 +133,12 @@ $('a[data-confirm]').click(function(ev){
         </div>
         <div class="row">
           <div class="col-md-12 bg-light p-2 pl-3 border-bottom text-white">
+            <a href="control.php?islem=gider" id="lk">Gider Ekle</a>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 bg-light p-2 pl-3 border-bottom text-white">
             <a href="control.php?islem=sifredegis" id="lk">Ad ve Şifre Değiştir</a>
 
           </div>
@@ -186,6 +192,15 @@ $('a[data-confirm]').click(function(ev){
             <?php
               @$islem=$_GET["islem"];
               switch ($islem) {
+                case 'gider':
+                  $yonclass->gider($vt);
+                break;
+                case 'giderguncel':                  
+                  $yonclass->giderguncel($vt);
+                break;
+                case 'gidersil':                  
+                  $yonclass->gidersil($vt);
+                break;
                 case 'cikis':
                 $kullanıcıadi=$yonclass->kulad($vt);
                 $yonclass->cikis($kullanıcıadi);

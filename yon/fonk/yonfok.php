@@ -695,6 +695,8 @@ function rapor($vt){
       $veri=$this->genelsorgu($vt,"Truncate gecicimasa");$veri=$this->genelsorgu($vt,"Truncate geciciurun");
              $veri=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih = CURDATE()");
              $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih = CURDATE()");
+             $veri3=$this->genelsorgu($vt,"SELECT * FROM gider WHERE tarih = CURDATE()");
+
 
         
         break;
@@ -702,22 +704,26 @@ function rapor($vt){
         $veri=$this->genelsorgu($vt,"Truncate gecicimasa");$veri=$this->genelsorgu($vt,"Truncate geciciurun");
              $veri=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih = DATE_SUB(CURDATE(), INTERVAL 1 DAY)");
              $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih = DATE_SUB(CURDATE(), INTERVAL 1 DAY)");
+             $veri3=$this->genelsorgu($vt,"SELECT * FROM gider WHERE tarih = DATE_SUB(CURDATE(), INTERVAL 1 DAY)");
 
         
         break;case 'hafta':
         $veri=$this->genelsorgu($vt,"Truncate gecicimasa");$veri=$this->genelsorgu($vt,"Truncate geciciurun");
               $veri=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE YEARWEEK(tarih) = YEARWEEK(CURRENT_DATE)");
               $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE YEARWEEK(tarih) = YEARWEEK(CURRENT_DATE)");
+              $veri3=$this->genelsorgu($vt,"SELECT * FROM gider WHERE YEARWEEK(tarih) = YEARWEEK(CURRENT_DATE)");
               
         break;case 'ay':
         $veri=$this->genelsorgu($vt,"Truncate gecicimasa");$veri=$this->genelsorgu($vt,"Truncate geciciurun");
                $veri=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)");
                $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)");
+               $veri3=$this->genelsorgu($vt,"SELECT * FROM gider WHERE tarih >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)");
         
         break;case 'tum':
         $veri=$this->genelsorgu($vt,"Truncate gecicimasa");$veri=$this->genelsorgu($vt,"Truncate geciciurun");
                $veri=$this->genelsorgu($vt,"SELECT * FROM rapor");
                $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor");
+               $veri3=$this->genelsorgu($vt,"SELECT * FROM gider");
 
         
         break;
@@ -731,6 +737,7 @@ function rapor($vt){
 
                $veri=$this->genelsorgu($vt,"SELECT * FROM rapor where DATE(tarih) BETWEEN '$tarih1' AND '$tarih2'");
                $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor where DATE(tarih) BETWEEN '$tarih1' AND '$tarih2'");
+               $veri3=$this->genelsorgu($vt,"SELECT * FROM gider where DATE(tarih) BETWEEN '$tarih1' AND '$tarih2'");
 
         
         break;
@@ -739,10 +746,17 @@ function rapor($vt){
       $veri=$this->genelsorgu($vt,"Truncate gecicimasa");$veri=$this->genelsorgu($vt,"Truncate geciciurun");
                $veri=$this->genelsorgu($vt,"SELECT * FROM rapor");
                $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor");
+               $veri3=$this->genelsorgu($vt,"SELECT * FROM gider");
+
 
            
         break;
     }
+    $gidertoplam=0;
+    while($giderson=$veri3->fetch_assoc()){
+      $gidertoplam+=$giderson["fiyat"];
+    }
+    $gidertoplam*=-1;
 
 
 
@@ -820,6 +834,8 @@ function rapor($vt){
                 $son=$this->genelsorgu($vt,"SELECT * from gecicimasa order by hasilat desc;"); 
                 $toplamadet=0;
                 $toplamhasilat=0;
+                
+                  
 
 
                 while ($listele=$son->fetch_assoc()) {
@@ -913,7 +929,12 @@ function rapor($vt){
                       <td colspan="2">TOPLAM</td>
                       <td colspan="1">'.$toplamadet.'</td>
                       <td colspan="1">'.number_format($toplamhasilat, 2, ',', '.').'</td>
-                      </tr>';
+
+                      </tr>
+                      <tr>
+                      <td colspan="4" class="bg-success">NET KAZANÇ'.number_format($toplamhasilat+$gidertoplam, 2, ',', '.').'₺</td>
+                      </tr>
+                      ';
 
 
                 echo '</tbody>
@@ -926,6 +947,154 @@ function rapor($vt){
             </tbody>
   </table>';
 }
+function gider($vt){
+  @$buton=$_POST["buton"];
+  if(!$buton){
+  echo'
+  <div class="container text-center">
+<div class="row mx-auto">
+    <div class="col col-md-4"></div>
+    <div class="col col-md-4 mx-auto text-center">
+  <form action="control.php?islem=gider" method="post">
+  <div class="col col-md-12 border-bottom p-2"><h3>GİDER EKLE</h3></div>
+  <div class="col col-md-12"><input type="text" name="ad" class="form-control mt-2"required="required" placeholder="Giderin ismi"/></div>
+  <div class="col col-md-12"><input type="text" name="fiyat" class="form-control mt-2"required="required" placeholder="Giderin Tutarı"/></div>
+  <div class="col col-md-12"><input type="submit" name="buton" class="btn btn-success mt-2" value="EKLE"/></div>
+  </form>
+  </div>
+  <div class="col col-md-4"></div>
+</div>
+</div>';
+  }else{
+  $fiyat=$_POST["fiyat"];
+  $ad=$_POST["ad"];
+
+  $bugun = date("Y-m-d");
+
+  $giderekle="INSERT INTO `gider` (`ad`, `fiyat`, `tarih`)
+  VALUES ('$ad', '$fiyat', '$bugun')";
+$giderekleson=$vt->prepare($giderekle);
+$giderekleson->execute();
+$this->uyari("success","Gider Eklendi","control.php?islem=gider");
+
+  }
+  echo '
+      ';
+      @$bugunbuton=$_POST["bugun"];
+      @$getirbuton=$_POST["getir"];
+      if($bugunbuton){
+        $so=$this->genelsorgu($vt,"SELECT * FROM gider WHERE tarih = CURDATE()");
+      }
+      if($getirbuton){
+        $tarih1=$_POST["tarih1"];
+        $tarih2=$_POST["tarih2"];
+        $so=$this->genelsorgu($vt,"SELECT * FROM gider where DATE(tarih) BETWEEN '$tarih1' AND '$tarih2'");
+
+      }else{
+        $so=$this->genelsorgu($vt,"SELECT * FROM gider");
+
+      }
+  echo '<table class="table text-center table-striped table-bordered mx-auto col-md-7 mt-4">
+    <thead>
+    <thead>
+    <tr class="" >
+    
+      <th colspan="4"><form action="control.php?islem=gider" method="post">
+     
+      <input type="date" name="tarih1" class="form-control col-md-12">
+      <input type="date" name="tarih2" class="form-control col-md-12">
+      <input type="submit" name="getir" class="btn btn-success mt-2" value="GETİR">
+      <th><button name=bugun value="bugun" class="bnt btn-success">Bugünkü Giderleri Getir</button></th>
+
+      </div>
+      </tr
+
+    
+    
+      </thead>
+      <tr>
+        <th scope="col">Gider Adı</th>
+        <th scope="col">Fiyat</th>
+        <th scope="col">Tarih</th>
+        <th scope="col">Güncelle</th>
+        <th scope="col">Sil</th>
+      </tr>
+      <tbody>';
+      $toplamgider=0;
+  while ($sonuc=$so->fetch_assoc()) {
+    $toplamgider+=$sonuc["fiyat"];
+    echo '
+          <tr>
+            <td>'.$sonuc["ad"].'</td>
+            <td>'.number_format($sonuc["fiyat"], 2, ',', '.').'₺</td>
+            <td>'.$sonuc["tarih"].'</td>
+            <td><a href="control.php?islem=giderguncel&giderid='.$sonuc["id"].'" class="btn btn-warning">Güncelle</td>
+            <td><a href="control.php?islem=gidersil&giderid='.$sonuc["id"].'" class="btn btn-danger">Sil</td>
+  
+  
+  
+          </tr>
+  
+  
+    ';
+  }
+  
+  echo '
+            <td class="bg-warning" colspan="2">Toplam Gider</td>
+            <td class="bg-danger">'.number_format($toplamgider, 2, ',', '.').'</td>
+  </tbody>
+  </thead>
+  
+  </table>';
+
+}
+function giderguncel($vt){
+  echo ' <div class="col-md-3 text-center mx-auto mt-5 table-bordered">';
+
+if(isset($_POST["buton"])){
+    @$giderid=htmlspecialchars($_POST["giderid"]);
+    @$giderad=htmlspecialchars($_POST["giderad"]);
+    @$fiyat=htmlspecialchars($_POST["fiyat"]);
+    if ($giderid=="" && $giderad=="" && $fiyat=="") {
+      $this->uyari("danger","HATA YAPTINIZ TEKRARDAN DENEYİNİZ...","control.php?islem=gider");
+    }
+    else {
+        $this->genelsorgu($vt,"UPDATE gider SET ad='$giderad', fiyat='$fiyat' WHERE id=$giderid");
+        $this->uyari("success","GÜNCELLEME BAŞARILI","control.php?islem=gider");
+    }
+}
+else{
+  @$id=$_GET["giderid"];
+$aktar=$this->genelsorgu($vt,"SELECT * FROM  gider WHERE id=$id")->fetch_assoc();
+
+echo '
+
+    <form class="" action="" method="post">
+      <div class="col-md-12 table-light"><h4>GİDER GUNCELLE</h4></div>
+      <div class="col-md-12 table-light">
+        <input type="text" name="giderad" value="'.$aktar["ad"].'" class="form-control">
+      </div><div class="col-md-12 table-light">
+      <input type="text" name="fiyat" value="'.$aktar["fiyat"].'" class="form-control">
+    </div>
+      <div class="col-md-12 table-light">
+        <input type="submit" name="buton"  value="Gönder" class="btn btn-success mt-3 mb-3">
+      </div>
+      <input type="hidden" name="giderid" value="'.$aktar["id"].'"/>
+    </form>
+';
+}
+echo '</div>';
+}
+function gidersil($vt){
+  $gideris=$_GET["giderid"];
+  if ($gideris!="" && is_numeric($gideris)) {
+    $this->genelsorgu($vt,"DELETE FROM gider WHERE id=$gideris");
+    $this->uyari("success","GİDER BAŞARIYLA SİLİNDİ.","control.php?islem=gider");
+  }else {
+    $this->uyari("danger","HATA OLUŞTU.","control.php?islem=gider");
+
+  }
+}
 function garsonper($vt){
 
 
@@ -937,6 +1106,7 @@ function garsonper($vt){
       
              $veri=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)");
              $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)");
+             
       
       break;
       
