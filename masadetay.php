@@ -1,8 +1,9 @@
 <?php include("fonksiyon/fonksiyon.php"); $masam = new sistem;
 @$masaid=$_GET["masaid"];
+
 ?>
 <head>
-<meta http-equiv="Content-Type" content="text/html;" charset="utf-8" />
+<meta charset="ISO-8859-1"> 
 <script src="dosya/jqu.js"></script>
 <link rel="stylesheet" href="dosya/boost.css">
 <link rel="stylesheet" href="dosya/stil.css">
@@ -71,7 +72,7 @@ $("#sonuc").load("islemler.php?islem=urun&katid=" + sectionId).fadeIn();
 
 						<div class="col-md-12">
 							<?php
-							for ($i=1; $i<=24; $i++) :
+							for ($i=1; $i<=25; $i++) :
 							echo '<label class="btn btn-info m-2"><input name="adet" type="radio" value="'.$i.'" />'.$i.'</label>';
 							endfor;
 							?>

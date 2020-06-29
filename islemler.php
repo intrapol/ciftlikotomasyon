@@ -240,12 +240,17 @@ $id=htmlspecialchars($_GET["id"]);
 									</td>
 									</tr>';
 			endwhile;
-	echo '<tr class="bg-dark text-center text-warning">
-	 <td> TOPLAM</b></td>
-		<td>'.$adet.'</b></td>
-			 <td colspan="3"><b>'.number_format($sontutar,2,'.',',').'₺</b></td>
-		</tr>
+	echo '
 		</tbody></table>
+		<div class="row">
+			<div class="col-md-12">
+			<div class="alert alert-dark" role="alert"><h4>
+  <a class="">Toplam Hesap:   <span class="badge badge-secondary"> '.number_format($sontutar,2,'.',',').'₺</span>   </a>
+</div>
+			</div>
+		</div>
+			
+		
 		<div class="row">
 		<div class="col-md-12">
 		<div class="row">

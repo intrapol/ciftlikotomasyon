@@ -2,6 +2,7 @@
 $veri=$sistem->benimsorum2($db,"SELECT * from garson where durum=1",1)->num_rows;
 //header("refresh:2;");  // sayfanın otomatik yenilenmesini sağlıyrouz ..... anlık spariş sayfasında gözükecektir
 
+header("refresh:30;url=index.php");
 
 ?>
 <head>
