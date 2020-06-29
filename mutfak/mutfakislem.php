@@ -149,7 +149,7 @@ function teksordu($vt,$sorgu) {
 }
 
 
-header("refresh:60;url=index.php");
+header("refresh:61;url=index.php");
 
 
 ?>
