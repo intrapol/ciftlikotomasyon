@@ -7,7 +7,7 @@
 <script src="dosya/jqu.js"></script>
 <link rel="stylesheet" href="dosya/boost.css">
 <link rel="stylesheet" href="dosya/stil.css">
-<title>TEST</title>
+<title>MASA:<?php echo $masaid?></title>
 <script>
 $(document).ready(function() {
 var id="<?php echo $masaid; ?>";
