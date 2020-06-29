@@ -191,7 +191,7 @@ $('a[data-confirm]').click(function(ev){
 
             <?php
               @$islem=$_GET["islem"];
-              switch ($islem) {
+              switch ($islem) {                
                 case 'gider':
                   $yonclass->gider($vt);
                 break;

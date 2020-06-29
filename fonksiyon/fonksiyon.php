@@ -37,7 +37,7 @@ echo '<a href="islemler.php?islem=garsoncikis"><kbd class="bg-danger m-3">ÇIKI�
 		$bos=0;
 		$dolu=0;
 	while ($masason=$sonuc->fetch_assoc()) {
-		if($masason["id"]==0){}else{
+		if($masason["id"]==0 || $masason["id"]==-1 ){}else{
 	/// her sorguda maasaanlik siparis gider ve bu id varmı diye bakar
 	$siparisler = 'select * from anliksiparis where masaid='.$masason["id"].'';
 

@@ -56,6 +56,7 @@ $("#sonuc").load("islemler.php?islem=urun&katid=" + sectionId).fadeIn();
 			<div class="row">
 				<form id="formum">
 				<div class="col-md-12" id="sonuc"  style="min-height:50%;">
+				
 				<img src="dosya/işarettik.png" style="width:50%;height:50%;" alt="">
 				</div>
 			</div>

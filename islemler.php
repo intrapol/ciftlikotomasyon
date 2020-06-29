@@ -207,7 +207,8 @@ $id=htmlspecialchars($_GET["id"]);
 	echo '<table class="table">
 	<thead>
 	<tr>
-	<th scope="col" id="hop1" class="text-warning bg-dark">Ürün Adı</th>
+	<th scope="col" id="hop4" class="text-warning bg-dark">İşlem</th>
+	<th scope="col" id="hop1" class="text-warning bg-dark">Eksilt</th>
 	<th scope="col" id="hop2" class="text-warning bg-dark">Adet</th>
 	<th scope="col" id="hop3" class="text-warning bg-dark">Tutar</th>
 	<th scope="col" id="hop4" class="text-warning bg-dark">İşlem</th>
@@ -226,15 +227,22 @@ $id=htmlspecialchars($_GET["id"]);
 								$masaid=$gelenson["masaid"];
 									echo '<tr>
 									<td>'.$gelenson["urunad"].'</td>
-									<td>'.$gelenson["adet"].'</td>
+									<td><form action="uruneksilt.php" method="post">
+									<input type="hidden" name="urunid" value="'.$gelenson["urunid"].'">
+									<input type="hidden" name="masaid" value="'.$id.'">
+									<input type="hidden" name="adet" value="'.$gelenson["adet"].'">
+									<input class="btn btn-warning "type="submit" name="butonn" value="-">		
+
+									</form></td>
+									<td> '.$gelenson["adet"].'</td>
 									<td>'.number_format($tutar,2,'.',',').'</td>
 									<td id="yakala">
+									
 									<form action="urunsil.php" method="post">
 									<input type="hidden" name="urunid" value="'.$gelenson["urunid"].'">
 									<input type="hidden" name="masaid" value="'.$id.'">
 									<input type="hidden" name="adet" value="'.$gelenson["adet"].'">
-									<input class="btn btn-danger "type="submit" value="SİL">
-									
+									<input class="btn btn-danger "type="submit" name="buton" value="SİL">		
 
 									</form>
 									</td>
@@ -386,12 +394,15 @@ case "urun" :
   $katid=htmlspecialchars($_GET["katid"]);
   $a="select * from urunler where katid=$katid";
 	$d=benimsorum2($db,$a,1);
+	echo '	<div class="row">';
 	while ($sonuc=$d->fetch_assoc()):
-	echo '<label class="btn btn-dark m-2"><input name="urunid" type="radio" value="'.$sonuc["id"].'" />
-	'.$sonuc["ad"].'</label>';
+	echo '<div class="col-md-4"> <label class="btn btn-dark m-2"><input name="urunid" type="radio" value="'.$sonuc["id"].'" />
+	'.$sonuc["ad"].'</label> </div>';
 	endwhile;
+	echo '</div>';
 break;
 endswitch;
 ?>
 </body>
 </html>
+									
