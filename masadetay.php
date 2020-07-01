@@ -115,6 +115,7 @@ $("#sonuc").load("islemler.php?islem=urun&katid=" + sectionId).fadeIn();
 
 		<div class="col-md-2  border-left" id="urunler" style="height: 600px;overflow-y: auto;overflow-x: hidden;">
 		<?php $masam->urungrup($db); ?>
+		
 
 		</div>
 </div>

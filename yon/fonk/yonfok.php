@@ -744,9 +744,9 @@ function rapor($vt){
       
       default:
       $veri=$this->genelsorgu($vt,"Truncate gecicimasa");$veri=$this->genelsorgu($vt,"Truncate geciciurun");
-               $veri=$this->genelsorgu($vt,"SELECT * FROM rapor");
-               $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor");
-               $veri3=$this->genelsorgu($vt,"SELECT * FROM gider");
+             $veri=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih = CURDATE()");
+             $veri2=$this->genelsorgu($vt,"SELECT * FROM rapor WHERE tarih = CURDATE()");
+             $veri3=$this->genelsorgu($vt,"SELECT * FROM gider WHERE tarih = CURDATE()");
 
 
            

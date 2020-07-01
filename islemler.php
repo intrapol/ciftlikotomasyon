@@ -395,18 +395,19 @@ case "urun" :
   $a="SELECT * from urunler ORDER BY ad ASC";
 	$d=benimsorum2($db,$a,1);
 	echo '	<div class="row">';
-
 	while ($sonuc=$d->fetch_assoc()):
 		if($sonuc["katid"]==$katid){
+						
 	echo '<div class="col-md-4"> <label class="btn btn-dark m-2"><input name="urunid" type="radio" value="'.$sonuc["id"].'" />
 	'.$sonuc["ad"].'</label> </div>';
-}else{
-
+						
 }
 	endwhile;
+
 	echo '</div>';
 break;
 endswitch;
+
 ?>
 </body>
 </html>

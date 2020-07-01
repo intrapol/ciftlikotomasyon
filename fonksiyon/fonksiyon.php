@@ -73,7 +73,9 @@ echo '<a href="islemler.php?islem=garsoncikis"><kbd class="bg-danger m-3">Ã‡IKIÅ
 		$se="select * from kategori";
 		$gelen=$this->benimsorum($db,$se,1);
 		while ($son=$gelen->fetch_assoc()) :
+					if($son["id"]!=-1){
 		echo '<br><a type="button" class="btn btn-info"  style="height:50px; width:100%;" sectionId="'.$son["id"].'">'.$son["ad"].'</a><br>';
+	}	
 		endwhile;
 	}
 		function masatoplam($dv) {
