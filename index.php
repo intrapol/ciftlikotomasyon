@@ -63,7 +63,7 @@ border-radius:15px;
 <div class="row table-dark" id="rows">
 <div class="col-md-2 border right">Toplam Sipariş : <a class="text-warning"><?php $sistem->siparistoplam($db);?></a></div>
 <div class="col-md-2 border right">KG Balık Sat :<a href="kgekle.php"><kbd class="bg-success m-3">+</kbd></a></div>
-<div class="col-md-2 border right">Masaya KG Balık EKle:<a href="masakgekle.php"><kbd class="bg-success m-3">+</kbd></a></div>
+<div class="col-md-2 border right">MS KG Balık EKle:<a href="masakgekle.php"><kbd class="bg-success m-3">+</kbd></a></div>
 <div class="col-md-3 border right">Aktif Garson : <a class="text-warning"><?php $sistem->garsonbak($db);?></div>
 <div class="col-md-3 border right">Tarih :<a class="text-warning"> <?php echo date('d.m.Y H:i:s'); ?></a></div>
 </div>
