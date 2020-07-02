@@ -85,6 +85,11 @@ function teksordu($vt,$sorgu) {
             $saat=$urunler["saat"];
             $dakika=$urunler["dakika"];
             $urunad=$urunler["urunad"];
+            // urunlerin sıralamasından oluşan sorunun a-balık sıralama sorunun çözümü  balık olarak yazdırma komutları 
+			$string=$urunad;
+			$string{0}=" ";
+			$string{1}=" ";
+			$urunad=ltrim($string);
             $urunadet=$urunler["adet"];
             $durum=$urunler["durum"];
             $hazır="HAZIR";

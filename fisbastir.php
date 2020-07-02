@@ -73,10 +73,14 @@ $id=htmlspecialchars($_GET["masaid"]);
 								$tutar = $gelenson["adet"] * $gelenson["urunfiyat"];
 								$adet +=$gelenson["adet"];
 								$sontutar +=$tutar;
-								
+								// urunlerin sıralamasından oluşan sorunun a-balık sıralama sorunun çözümü  balık olarak yazdırma komutları 
+			$string=$gelenson["urunad"];
+			$string{0}=" ";
+			$string{1}=" ";
+			$string=ltrim($string);
 								
 									echo '<tr>
-									<td>'.$gelenson["urunad"].'</td>
+									<td>'.$string.'</td>
 									<td>'.$gelenson["adet"].'</td>
 									<td>'.number_format($tutar,2,'.',',').'</td>
 									</tr>';

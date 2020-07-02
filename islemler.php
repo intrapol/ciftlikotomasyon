@@ -225,8 +225,13 @@ $id=htmlspecialchars($_GET["id"]);
 								$adet +=$gelenson["adet"];
 								$sontutar +=$tutar;
 								$masaid=$gelenson["masaid"];
+								// urunlerin sıralamasından oluşan sorunun a-balık sıralama sorunun çözümü  balık olarak yazdırma komutları 
+								$string=$gelenson["urunad"];
+								$string{0}=" ";
+								$string{1}=" ";
+								$string=ltrim($string);
 									echo '<tr>
-									<td>'.$gelenson["urunad"].'</td>
+									<td>'.$string.'</td>
 									<td><form action="uruneksilt.php" method="post">
 									<input type="hidden" name="urunid" value="'.$gelenson["urunid"].'">
 									<input type="hidden" name="masaid" value="'.$id.'">
@@ -397,9 +402,14 @@ case "urun" :
 	echo '	<div class="row">';
 	while ($sonuc=$d->fetch_assoc()):
 		if($sonuc["katid"]==$katid){
+			// urunlerin sıralamasından oluşan sorunun a-balık sıralama sorunun çözümü  balık olarak yazdırma komutları 
+			$string=$sonuc["ad"];
+			$string{0}=" ";
+			$string{1}=" ";
+			$string=ltrim($string);
 						
 	echo '<div class="col-md-4"> <label class="btn btn-dark m-2"><input name="urunid" type="radio" value="'.$sonuc["id"].'" />
-	'.$sonuc["ad"].'</label> </div>';
+	'.$string.'</label> </div>';
 						
 }
 	endwhile;
