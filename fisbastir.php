@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html;" charset="utf-8" />
 <script src="dosya/jqu.js"></script>
 <link rel="stylesheet" href="dosya/boost.css">
-<link rel="stylesheet" href="dosya/stil.css">
+
 <script>
 $(document).ready(function() {
 	$('#btnn').click(function() {
@@ -25,12 +25,14 @@ $(document).ready(function() {
 });
 </script>
 <title>FİŞ BASTIR</title>
+<style>
+body{
+	overflow-x: hidden !important;
+}</style>
 
 </head>
 <body onload="window.print()">
-<div class="container-fluid">
-<div class="row">
-<div class="col-md-2 mx-auto">
+
 
 <?php
 if ($masaid!="") :
@@ -45,19 +47,24 @@ $id=htmlspecialchars($_GET["masaid"]);
 	if ($d->num_rows==0) :
 	uyari("Henüz Sparis yok","danger");
 	else:
-	echo '<table class="table">
+	echo '<table>
 	<tr>
-	<td colspan="3" class="border-top-0 text-center">MASA:'.$dizi["ad"].'</strong>
+	<td colspan="3" class="text-center"><h3>MASA: '.$dizi["ad"].'</h3></strong>
 </td>
 </tr>
 <tr>
-<td colspan="3" class="border-top-0 text-center">TARİH:'.date("d.m.Y").'</strong>
+<td colspan="3" class="text-center">TARİH: '.date("d.m.Y").'</strong>
 </td>
 </tr>
 <tr>
-<td colspan="3" class="border-top-0 text-center">SAAT:'.date("h:i:s").'</strong>
+<td colspan="3" class="border-top-0 text-center">SAAT: '.date("h:i:s").'</strong>
 </td>
 </tr>
+<tr>
+									<td>Ürün Ad</td>
+									<td>Adet</td>
+									<td>Tutar</td>
+									</tr>
 	';
 		$adet=0;
 		$sontutar=0;
@@ -69,53 +76,27 @@ $id=htmlspecialchars($_GET["masaid"]);
 								
 								
 									echo '<tr>
-									<td colspan="1" class="border-top-0 text-center">Ad:    '.$gelenson["urunad"].'</strong></td>
-									<td colspan="1" class="border-top-0 text-center">Adet:  '.$gelenson["adet"].'</strong></td>
-									<td colspan="1" class="border-top-0 text-center">Tutar:  '.number_format($tutar,2,'.',',').'</strong></td>
+									<td>'.$gelenson["urunad"].'</td>
+									<td>'.$gelenson["adet"].'</td>
+									<td>'.number_format($tutar,2,'.',',').'</td>
 									</tr>';
 			endwhile;
 	echo '
 	<tr>
-<td colspan="2" class="border-top-0 text-center">GENEL TOPLAM:</strong></td>
-<td colspan="2" class="border-top-0 text-center">'.number_format($sontutar,2,'.',',').'₺</strong></td>
+<td colspan="2">GENEL TOPLAM:</strong></td>
+<td colspan="2"><h4>'.number_format($sontutar,2,'.',',').'₺</h4></strong></td>
 
 </tr>
 	
 			</tbody></table>
-	<!--
-	 <form id="hesapform">
-
-
-	 <input type="hidden" name="hesapalid" value="'.$id.'" />
-	 <input type="button" id="btnn" value="HESABI KAPAT" class="btn btn-danger btn-block mt-4" />
-	 </form>
-		-->
+				
 		';
 	endif;
 ?>
-
-
-
-
-</div>
-</div>
-
-
 <?php
-
 else:
-
-
 echo "hata var";
-
-
 endif;
-
-
 ?>
-
-</div>
-
 </body>
-
 </head>

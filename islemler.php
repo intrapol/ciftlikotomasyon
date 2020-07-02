@@ -292,7 +292,7 @@ $id=htmlspecialchars($_GET["id"]);
 
 	 </form>
 
-	 <p><a href="fisbastir.php?masaid='.$id.'" onclick="ortasayfa(this.href,\'mywindow\',\'350\',\'400\',\'yes\');return false" class="btn btn-warning btn-block mt-4">Fiş Bastır</a></p>
+	 <p><a href="fisbastir.php?masaid='.$id.'" onclick="ortasayfa(this.href,\'mywindow\',\'800\',\'700\',\'yes\');return false" class="btn btn-warning btn-block mt-4">Fiş Bastır</a></p>
 		</div>
 		</div>
 		';
