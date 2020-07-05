@@ -61,7 +61,7 @@ $id=htmlspecialchars($_GET["masaid"]);
 </td>
 </tr>
 <tr>
-									<td>Ürün Ad</td>
+									<td>Ürün Adı</td>
 									<td>Adet</td>
 									<td>Tutar</td>
 									</tr>

@@ -144,6 +144,12 @@ $('a[data-confirm]').click(function(ev){
           </div>
         </div>
         <div class="row">
+          <div class="col-md-12 bg-warning p-2 pl-3 border-bottom ">
+            <a href="control.php?islem=yedekal" id="lk">Veri Tabanı Yedekle</a>
+
+          </div>
+        </div>
+        <div class="row">
           <div class="col-md-12 bg-danger p-2 pl-3 border-bottom text-white">
             <a href="control.php?islem=cikis" id="lk">Çıkış</a>
 
@@ -194,6 +200,8 @@ $('a[data-confirm]').click(function(ev){
               switch ($islem) {                
                 case 'gider':
                   $yonclass->gider($vt);
+                break;case 'yedekal':
+                  $yonclass->yedekal($vt);
                 break;
                 case 'giderguncel':                  
                   $yonclass->giderguncel($vt);

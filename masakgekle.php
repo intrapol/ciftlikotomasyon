@@ -13,6 +13,7 @@
 
 
 <?php 
+ob_start();
 $db = new mysqli ("localhost","serdar","123456","siparis") or die ("Bağlanamadı");
 
 $db->set_charset ("utf8");

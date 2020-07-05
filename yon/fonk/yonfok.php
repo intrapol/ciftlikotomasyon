@@ -947,6 +947,66 @@ function rapor($vt){
             </tbody>
   </table>';
 }
+//çaldım çaldım ve başarılı....
+function yedekal($vt) {	
+  $tables=array();
+  $result=$vt->query("SHOW TABLES");
+  while ($row = $result->fetch_row()):
+      $tables[]=$row[0];
+  endwhile;
+  
+  $return= "SET NAMES utf8;";
+  
+  // tabloların içine girerek tüm verileri sıra sıra almalıyım
+  
+      foreach ($tables as $tablo):
+      // sırası gelen tablonun tüm verileri almak
+      // sırası gelen tablonun sütun sayısını almalıyım
+      $result= $vt->query("SELECT * FROM  $tablo"); // tablonun verilerini alıyorum.
+      $numColumns=$result->field_count;		
+      @$return .= "DROP TABLE IF EXISTS $tablo;";
+      
+      
+      $result2= $vt->query("SHOW CREATE TABLE  $tablo");
+      $row2 = $result2->fetch_row();	
+      @$return.="\n\n".$row2[1].";\n\n";
+      
+        for ($i=0; $i<$numColumns; $i++):
+        
+            while ($row =$result->fetch_row()):
+            $return.="INSERT INTO $tablo VALUES(";
+              
+              for ($a=0; $a<$numColumns; $a++):
+              if (isset($row[$a])): $return.='"'.$row[$a].'"'; else : $return.='""'; endif;							
+              if ($a<($numColumns-1)): $return.=',';  endif;
+              
+              endfor;
+            
+            
+            $return.=");\n";
+            
+            
+            endwhile;
+        
+            
+        
+        endfor;
+      
+      $return.="\n\n\n";
+      
+  
+      endforeach;
+      
+      $tarih=date("d.m.Y");
+      $dosya = fopen('yedekler/yedek-'.$tarih.'.sql', 'w+');
+fwrite($dosya,$return);
+fclose($dosya);
+      
+      echo '<div class="alert alert-success text-center mx-auto mt-4">BAŞARIYLA YEDEK ALINDI</div>';
+  header("refresh:2,url=control.php");
+      
+      
+  }
 function gider($vt){
   @$buton=$_POST["buton"];
   if(!$buton){
