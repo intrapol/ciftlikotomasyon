@@ -1,13 +1,3 @@
--- Adminer 4.7.7 MySQL dump
-
-SET NAMES utf8;
-SET time_zone = '+00:00';
-SET foreign_key_checks = 0;
-SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
-
-CREATE DATABASE `siparis` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_turkish_ci */;
-USE `siparis`;
-
 DROP TABLE IF EXISTS `anliksiparis`;
 CREATE TABLE `anliksiparis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

@@ -308,6 +308,9 @@ if ($_POST) :
 	@$masaid=htmlspecialchars($_POST["masaid"]);
 	@$urunid=htmlspecialchars($_POST["urunid"]);
 	@$adet=htmlspecialchars($_POST["adet"]);
+	if($adet==""){
+		$adet=1;
+	}
 		if ($masaid==""  || $urunid==""  || $adet=="" ) :
 		uyari("Boş alan bırakma","danger");
 		else:
